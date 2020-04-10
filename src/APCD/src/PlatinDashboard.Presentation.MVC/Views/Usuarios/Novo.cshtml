@@ -1,0 +1,124 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers
+@model PlatinDashboard.Application.ViewModels.UserViewModels.CreateUserViewModel
+@{
+    ViewBag.Title = "Criar novo Usuário | Portal APCD";
+}
+@section Styles{
+    @Styles.Render("~/coreui/select2/css")
+    <style>
+        .select2-selection {
+            border: 1px solid #e4e7ea !important;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Usuarios")">Usuários</a>
+        </li>
+        <li class="breadcrumb-item active">Novo Usuário</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="display: inline-block">Cadastrar novo Usuário</h4>
+                <a href="@Url.Action("Index", "Usuarios")" class="btn btn-primary pull-right">Cancelar</a>
+            </div>
+            <div class="card-body">
+                <h5>Dados do Usuário</h5>
+                @using (@Html.BeginForm("Novo", "Usuarios", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Usuário" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.LastName)
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Sobrenome do Usuário" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "error invalid-feedback" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail do Usuário" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            @Html.LabelFor(model => model.UserName)
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Login do Usuário" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        @if (User.Identity.GetUserType() == "Manager")
+                        {
+                            <div class="form-group col-sm-4">
+                                @Html.LabelFor(model => model.UserType)
+                                <select id="UserType" name="UserType" class="form-control">
+                                    <option value="Manager" @(Model.UserType == "Manager" ? "selected" : "")>Manager</option>
+                                    <option value="Subadmin" @(Model.UserType == "Subadmin" ? "selected" : "")>Subadmin</option>
+                                    <option value="Comum" @(Model.UserType == "Comum" ? "selected" : "")>Comum</option>
+                                </select>
+                            </div>
+                        }
+                        else if (User.Identity.GetUserType() == "Subadmin")
+                        {
+                            <div class="form-group col-sm-4">
+                                @Html.LabelFor(model => model.UserType)
+                                <select id="UserType" name="UserType" class="form-control">
+                                    <option value="Comum">Comum</option>
+                                </select>
+                            </div>
+                        }
+                    </div>
+                    if (User.Identity.GetUserType() != "Admin")
+                    {
+                        <div class="form-group" id="StoreAccess">
+                            <label for="Email">Limitar acesso às lojas (Deixe vazio caso não queira limitar o acesso)</label>
+                            @Html.ListBoxFor(model => model.UserStoresIds, (IEnumerable<SelectListItem>)ViewBag.Lojas, new { @class = "form-control select2-element", multiple = "multiple" })
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.ConfirmPassword)
+                            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirmar Senha" } })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "error invalid-feedback" })
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Criar</button>
+                    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-danger">Cancelar</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/select2/script")
+    <script src="~/Scripts/viewsjs/user.js"></script>
+    <script>
+        bindDocumentReady();
+        bindUserTypeChange();
+    </script>
+}

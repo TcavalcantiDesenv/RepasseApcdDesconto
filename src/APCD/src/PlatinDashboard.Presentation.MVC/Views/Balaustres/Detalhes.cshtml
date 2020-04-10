@@ -1,0 +1,107 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers
+@model PlatinDashboard.Application.ViewModels.MidiaViewModels.VideoViewModel
+@{
+    ViewBag.Title = "Lançar Novo Balaustre | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/file-input/css")
+    <style>
+        div.file-thumbnail-footer > div.file-thumb-progress.hide > div {
+            display: none;
+        }
+
+        .file-input-ajax-new {
+            width: 100%;
+        }
+
+        div.input-group.file-caption-main > div.input-group-btn > a {
+            background-color: #4dbd74;
+            color: white;
+        }
+
+        div.input-group.file-caption-main > div.input-group-btn > button {
+            background-color: #f86c6b;
+            color: white;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Balaustres")">
+                Mídias
+            </a>
+        </li>
+        <li class="breadcrumb-item active">Novo Balaustre</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="display: inline-block">Detalhes do balaustre @Model.Title</h4>
+                <a href="@Url.Action("Index", "Balaustres")" class="btn btn-primary pull-right">Cancelar</a>
+            </div>
+            <div class="card-body" id="form-content">
+                <h5>Dados do Balaustre</h5>
+                @Html.Partial("_Editar", Model)
+            </div>
+            <div class="card-body">
+                <h5>Arquivo de Texto</h5>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input id="video" name="video" class="file" type="file" multiple data-preview-file-type="file" data-upload-url="@Url.Action("NovoVideo", "Balaustres")">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/coreui/file-input/script")
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/details.js"></script>
+    <script src="~/Scripts/viewsjs/videoindex.js"></script>
+    <script>
+        $('#video').fileinput({
+            language: 'pt-BR',
+            allowedFileExtensions: ['txt', 'docx', 'doc', 'pdf'],
+            showCancel: false,
+            fileActionSettings: { showZoom: false, uploadIcon: '<i class="fa fa-upload "></i>', removeIcon: '<i class="fa fa-trash-o "></i>', },
+            maxFileCount: 1,
+            maxFileSize: 81920,
+            validateInitialCount: true,
+            overwriteInitial: false,
+            initialPreviewAsData: true,
+            uploadExtraData: { videoId: @Model.VideoId },
+            initialPreview: [
+                @if (Model.FileName != null)
+                {
+                    var path = Model.FileName;
+                    @:'@Url.Content(path)',
+                }
+            ],
+            initialPreviewConfig: [
+                { type: "file", filetype: "pdf", caption: "@Model.Title", url: "@Url.Action("RemoverVideo", "Balaustres")", key: @Model.VideoId }
+            ],
+        })
+        .on('fileuploaded', function(event, data, previewId, index) {
+            location.reload();
+        });
+    </script>
+}

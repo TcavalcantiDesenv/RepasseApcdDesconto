@@ -1,0 +1,30 @@
+﻿@model PlatinDashboard.Application.ViewModels.CompanyViewModels.CompanyViewModel
+<div class="modal fade" id="delete-company-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remover Regional @Model.Name</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="delete-company-modal-message">Você tem certeza que deseja remover a regional @Model.Name?</p>
+            </div>
+            @using (Ajax.BeginForm("Remover", new { @controller = "Empresas" },
+                                    new AjaxOptions {
+                                        OnSuccess = "deleteCompanyCallBack",
+                                        OnFailure = "deleteCompanyFailed()" }
+                                    ,
+                                    new { @id = "delete-company-form" }))
+             {
+                <div class="modal-footer">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.CompanyId, new { id = "delete-company-id"})
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-danger ladda-button" data-style="zoom-out" onclick="submitForm(this, 'delete-company-form')">Confirmar</button>
+                </div>
+             }
+        </div>
+    </div>
+</div>

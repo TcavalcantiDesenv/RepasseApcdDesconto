@@ -1,0 +1,96 @@
+﻿@model Model.Entity.MaconModel
+@{
+    ViewBag.Title = "Empresas | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Lojas</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="row">
+        <!--/.col-->
+        <!--/.col-->
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div class="card-header">
+            <h4 style="display: inline-block">Lista de Maçons</h4>
+            <div class="form-group row col-md-3 float-right" style="display: inline-block">
+                <a class="btn btn-primary float-right d-md-block ladda-button">
+                    <input type="submit" value="Gravar" />
+                </a>
+            </div>
+
+
+            <div class="form-group row col-md-6 float-right" style="display: inline-block">
+                <label for="exampleInputEmail1">Data</label>
+                <div class="col-md-5" style="display: inline-block">
+                    @Html.TextBoxFor(model => model.ListaMacon[0].Dt_Emissao_Di, new { @type = "date", @class = "form-control datepicker" })
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-striped table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Macon</th>
+                        <th>Selecione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ListaMacon.Count; i++)
+                    {
+                        <tr>
+                            @Html.HiddenFor(model => model.ListaMacon[i].Nome)
+                            @Html.HiddenFor(model => model.ListaMacon[i].Nome_Tratamento)
+                            <td>@Model.ListaMacon[i].Nome @Model.ListaMacon[i].Nome_Tratamento</td>
+                            <td>@Html.CheckBoxFor(model => model.ListaMacon[i].IsChecked)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+<input id="MesAtual" hidden="hidden" name="MesAtual" value="@DateTime.Now.Month + 1" />
+<input id="AnoAtual" hidden="hidden" name="AnoAtual" value="@DateTime.Now.Year" />
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+

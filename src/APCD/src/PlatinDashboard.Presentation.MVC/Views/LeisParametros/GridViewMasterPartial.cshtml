@@ -1,0 +1,26 @@
+﻿@Html.DevExpress().GridView(
+    settings => {
+        settings.Name = "masterGrid";
+        settings.CallbackRouteValues = new { Controller = "LeisParametros", Action = "GridViewMasterPartial" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Home", Action = "GridViewMasterAddNewPartial" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Home", Action = "GridViewMasterUpdatePartial" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Home", Action = "GridViewMasterDeletePartial" };
+        settings.Width = 400;
+
+        settings.KeyFieldName = "Id";
+        settings.Columns.Add("Sistema");
+        settings.Columns.Add("Ambito");
+        settings.Columns.Add("Orgao");
+
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.SetDetailRowTemplateContent(c => {
+            Html.RenderAction("GridViewDetailPartial", new { RoomID = DataBinder.Eval(c.DataItem, "Id") });
+        });
+    }).Bind(Model).GetHtml()

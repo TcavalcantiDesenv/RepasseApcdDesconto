@@ -1,0 +1,86 @@
+﻿@model  List<Model.Entity.RemessaWeb>
+@{
+    ViewBag.Title = @Session["REGIONAL"].ToString();
+    Layout = "~/Views/Shared/_PortalLayout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+}
+<div class="breadcrumb">
+    <!-- Breadcrumb Menu-->
+    <div class="breadcrumb-menu d-md-down-none">
+        <div class="text-center">
+            ***  Regional: @Session["REGIONAL"].ToString()  ***
+        </div>
+    </div>
+</div>
+
+<div class="card-header">
+    <table class="table table-striped">
+        <tr>
+            <td class="text-center">
+                <a class="btn btn-warning">
+                    Regional: @Session["REGIONAL"].ToString() -- Valor Total: @Session["VALORTOTAL"].ToString()
+                </a>
+            </td>
+        </tr>
+    </table>
+    <div class="card">
+        @using (Html.BeginForm())
+        {
+            <div class="card-body">
+                <table class="table table-striped table-bordered table-responsive-sm datatable dataTable no-footer" id="companiesTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">LCM</th>
+                            <th class="text-center">Regional</th>
+                            <th class="text-center">Data Pagto.</th>
+                            <th class="text-center">Matricula</th>
+                            <th class="text-center">Nome</th>
+                            <th class="text-center">Valor</th>
+                            <th class="text-center">Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                        <tr>
+                            @Html.HiddenFor(model => model[i].indice)
+                            @Html.HiddenFor(model => model[i].Matricula)
+                            <td class="text-center">@Model[i].LCM</td>
+                            <td class="text-center">@Model[i].NomeRegional   </td>
+                            <td class="text-center">@Model[i].Vencimento   </td>
+                            <td class="text-center"> @Model[i].Matricula  </td>
+                            <td class="text-center">@Model[i].Nome</td>
+                            @{
+                                decimal preco = 0;
+                                try
+                                {
+                                    preco = Convert.ToDecimal(Model[i].Valor);
+                                }
+                                catch
+                                {
+                                    preco = 0;
+                                }
+
+                                ViewBag.Valor = String.Format("{0:C}", preco);
+                            }
+                            <td class="text-center">@String.Format("{0:C}", ViewBag.Valor)</td>
+                            <td class="text-center">[__]</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        }
+    </div>
+    <div class="text-center">
+
+        Responsável Regional: _______________________________________________
+    </div>
+
+</div>

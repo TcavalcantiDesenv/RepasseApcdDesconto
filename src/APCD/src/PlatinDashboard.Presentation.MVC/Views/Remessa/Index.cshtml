@@ -1,0 +1,490 @@
+﻿@*@model  List<Model.Entity.RemessaWeb>*@
+@using PagedList.Mvc;
+@using PlatinDashboard.Presentation.MVC.Models;
+@*@model PagedList.PagedList<Model.Entity.RemessaWeb>*@
+@model  PagedList.IPagedList<Model.Entity.RemessaWeb>
+@{
+
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            REGIONAL:  <a class="btn btn-success">
+                @ViewBag.NomeRegional - Cod: @ViewBag.CodRegional
+            </a>
+        </li>
+        <li class="breadcrumb-item active"></li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<div class="card">
+    <div class="card-header">
+        <table class="table table-striped">
+            <tr>
+                <td class="text-center">
+                    <a data-toggle="tooltip" title="Valor total referente a todos os associados selecionados." class="btn btn-warning">
+                        VALOR TOTAL: (@ViewBag.ValorTotal)
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a data-toggle="tooltip" title="Baixa um relatório em Excel de todos os associados selecionados para conferencia." class="btn btn-success" href="@Url.Action("DownloadExcel", "Remessa")">
+                        <i>Baixar Relatorio</i>
+                    </a>
+                </td>
+
+                <td>
+                    <a onclick="exibirPopUp('.popup',this)" class="ticket" title="Para selecionar vários associados por vez, ao abrir a tela, digite o número dos LCMs separados por vírgula e clique em baixar." data-toggle="modal" data-target="#Lote">
+                        <span data-toggle="tooltip" class="btn btn-info">BAIXAS EM LOTE</span>
+                    </a>
+                </td>
+                <td>
+                    <a onclick="exibirPopUp('.popup',this)" class="ticket" title="Para desmarcar um ou vários associados por vez, ao abrir a tela, digite o número dos LCMs separados por vírgula e clique em retornar." data-toggle="modal" data-target="#Retorna">
+                        <span data-toggle="tooltip" class="btn btn-primary">RETORNAR EM LOTE</span>
+                    </a>
+                </td>
+                <td>
+                    <a onclick="exibirPopUp('.popup',this)" title="Para dar a baixa definitiva de todos os associados selecionados, ao abrir a tela, digite a data de pagamento e clique em Baixar Pacote." class="ticket" data-toggle="modal" data-target="#infoModal">
+                        <span data-toggle="tooltip" class="btn btn-danger">FECHAR BAIXAS</span>
+                    </a>
+                </td>
+
+                <td class="text-warning">
+                    <a class="btn btn-success " title="Volta para página inicial." href="@Url.Action("Index", "Regional")">
+                        <i data-toggle="tooltip" class="fa fa-search-plus ">Voltar</i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <div class="row" id="row-busca">
+            <div class="col-md-6">
+                @using (Html.BeginForm("Index", "Remessa", FormMethod.Get, new { @class = "form-inline", id = "formBusca" }))
+                {
+                    <div class="form-group">
+                        <select name="tamanhoPagina" id="tamanhoPagina" class="form-control" onchange="this.form.submit()">
+                            <option value="10" @(ViewBag.TamanhoPagina == 10 ? "selected" : "")>Listar 10 registros por pagina</option>
+                            <option value="20" @(ViewBag.TamanhoPagina == 20 ? "selected" : "")>Listar 20 registros por pagina</option>
+                            <option value="30" @(ViewBag.TamanhoPagina == 30 ? "selected" : "")>Listar 30 registros por pagina</option>
+                            <option value="50" @(ViewBag.TamanhoPagina == 50 ? "selected" : "")>Listar 50 registros por pagina</option>
+                            <option value="100" @(ViewBag.TamanhoPagina == 100 ? "selected" : "")>Listar 100 registros por pagina</option>
+                            <option value="200" @(ViewBag.TamanhoPagina == 200 ? "selected" : "")>Listar 200 registros por pagina</option>
+                        </select>
+                    </div>
+                    <div class="input-group pull-right">
+                        <input type="text" class="form-control" placeholder="Buscar Matricula ..." name="busca" value="@ViewBag.Busca">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Buscar</button>
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered table-responsive-sm datatable dataTable no-footer" id="companiesTable">
+                    <tr>
+                        <th class="text-center">
+                            <i class="icon-people"></i>
+                        </th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">LCM</th>
+                        <th class="text-center">Matricula</th>
+                        <th class="text-center">Categoria</th>
+                        <th class="text-center">Vencimento</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Operação</th>
+                    </tr>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                    <tr>
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>@Model[i].Nome.ToUpper().Substring(0, 2).Trim()</span>
+                                </div>
+                                @{
+                                    DateTime venc3 = Convert.ToDateTime(@Model[i].Vencimento);
+                                    DiferencaDatas diferencaData3 = new DiferencaDatas(DateTime.Now, venc3);
+                                    int meses3 = Convert.ToInt32(diferencaData3.ToString());
+
+                                    if (@Model[i].LCM == "155741")
+                                    {
+                                        var teste = 0;
+                                    }
+
+
+                                    if (meses3 <= 4)
+                                    {
+                                        <span class="avatar-status badge-success"></span>
+                                    }
+                                    if (meses3 > 4)
+                                    {
+                                        <span class="avatar-status badge-danger"></span>
+                                    }
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            @{
+                                DateTime venc = Convert.ToDateTime(@Model[i].Vencimento);
+                                DiferencaDatas diferencaData = new DiferencaDatas(DateTime.Now, venc);
+                                int meses1 = Convert.ToInt32(diferencaData.ToString());
+                                <div>@Model[i].Nome</div>
+                                if (meses1 > 4)
+                                {
+                                    <div class="well-small text-muted">
+                                        <span class="badge badge-danger">VENCIDO A @meses1 MESES</span>
+
+                                    </div>
+                                }
+                            }
+                        </td>
+                        @*<td>@Model[i].CodRegional</td>*@
+                        <td class="text-center"> @Model[i].LCM</td>
+                        <td class="text-center"> @Model[i].Matricula</td>
+                        <td class="text-center"> @Model[i].Categoria</td>
+                        <td class="text-center"> @Model[i].Vencimento</td>
+                        @{
+                            decimal preco = 0;
+                            try
+                            {
+                                preco = Convert.ToDecimal(@Model[i].Valor.ToString());
+                            }
+                            catch
+                            {
+                                preco = 0;
+                            }
+
+                            ViewBag.Valor = String.Format("{0:C}", preco);
+                            ViewBag.Indice = (@Model[i].indice);
+                        }
+                        <td>@String.Format("{0:C}", ViewBag.Valor)</td>
+                       
+                        @{
+                            DateTime venc2 = Convert.ToDateTime(@Model[i].Vencimento);
+                            DiferencaDatas diferencaData2 = new DiferencaDatas(DateTime.Now, venc2);
+                            int meses2 = Convert.ToInt32(diferencaData.ToString());
+
+
+
+                            if (meses2 <= 4)
+                            {
+
+                                if (ViewBag.Ativo)
+                                {
+
+                                    if (@Model[i].Pago == false)
+                                    {
+                                        <td class="text-center">
+                                            <a onclick="exibirPopUp('.popup',this)" class="ticket" title="Para desmarcar um ou vários associados por vez, ao abrir a tela, digite o número dos LCMs separados por vírgula e clique em retornar." data-toggle="modal" data-target="#Pagamento">
+                                                <span data-toggle="tooltip" class="btn btn-primary">Em Aberto</span>
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">
+                                            <a data-toggle="tooltip" title="Clique para desmarcar este associado retorna-lo para o status 'Em aberto'. " class="btn btn-success" href="@Url.Action("Gravar", "Remessa", new { id = @Model[i].indice, ch = false, busca = ViewBag.Busca })">
+                                                <i class="fa fa-check-square-o"></i>
+                                            </a>
+                                        </td> }
+
+                                }
+                                else
+                                {
+                                    if (@Model[i].Pago == true)
+                                    {
+                                        <td class="text-center">
+                                            <a data-toggle="tooltip" title="Clique para desmarcar este associado retorna-lo para o status 'Em aberto'. " class="btn btn-success" href="@Url.Action("Gravar", "Remessa", new { id = @Model[i].indice, ch = false, busca = ViewBag.Busca })">
+                                                <i class="fa fa-check-square-o"></i>
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">
+                                            <a data-toggle="tooltip" title="Clique para selecionar este associado" class="btn btn-warning" href="@Url.Action("Gravar", "Remessa", new { id = @Model[i].indice, ch = true, busca = ViewBag.Busca })">
+                                                <i>Em Aberto</i>
+                                            </a>
+                                        </td>
+
+                                    }
+                                }
+
+
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <a data-toggle="tooltip" title="Mensalidade deste associado bloqueado por estar mais de 4 meses em atraso." class="btn btn-danger">
+                                        <i>Bloqueado</i>
+                                    </a>
+                                </td>
+                            }
+                        }
+
+                    </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+
+        <div id="container" style="margin-left: 20px">
+            <div class="col-md-6  pagination" style="margin-left: 20px">
+                @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, busca = ViewBag.Busca, tamanhoPagina = ViewBag.TamanhoPagina }))
+            </div>
+            <div class="col-md-6">
+                <span class="pull-right">
+                    Listando registros de @Model.FirstItemOnPage a @Model.LastItemOnPage de um total de @Model.TotalItemCount
+                </span>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Operação de Baixa</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Esta função estará fechará o pacote de arquivos de baixa para os associados pagos e será de caráter <em>IRREVERSÍVEL!</em>  Deseja continuar o processo?</p>
+
+                <form action="/Remessa/Fechapacote" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="date">Data do Pagamento</label>
+                            <input type="date" class="form-control" id="date" name="textBoxStringData" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-inputmask-placeholder="dd/mm/aaaa">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" type="button" data-dismiss="modal">Voltar</button>
+                            <div class="text-center">
+                                <a class="btn btn-danger">
+                                    <input type="submit" value="Fechar Pacote" />
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- /.modal-content-->
+    </div>
+
+    <!-- /.modal-dialog-->
+</div>
+<div class="modal fade" id="Lote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Baixas em Lote</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Digite os numeros dos LCMs que vc deseja baixar sempre separado por vírgula e clique em <em>BAIXAR!</em> </p>
+
+                <form action="/Remessa/BaixaLote" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="date">Lista de LCMs</label>
+                            <input type="text" class="form-control" id="date" name="textLcm">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" type="button" data-dismiss="modal">Voltar</button>
+                            <div class="text-center">
+                                <a class="btn btn-info">
+                                    <input type="submit" value="Baixar" />
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- /.modal-content-->
+    </div>
+
+    <!-- /.modal-dialog-->
+</div>
+<div class="modal fade" id="Retorna" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Retorno em Lote</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Digite os numeros dos LCMs que vc deseja RETORNAR os itens baixados sempre separado por vírgula e clique em <em>RETORNAR!</em> </p>
+
+                <form action="/Remessa/Retorna" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="date">Lista de LCMs</label>
+                            <input type="text" class="form-control" id="date" name="textLcm">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" data-dismiss="modal">Voltar</button>
+                            <div class="text-center">
+                                <a class="btn btn-info">
+                                    <input type="submit" value="Retornar" />
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- /.modal-content-->
+    </div>
+
+    <!-- /.modal-dialog-->
+</div>
+<div class="modal fade" id="Pagamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Selecione o valor a ser pago</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Há acordos firmados com esta regional, selecione qual valor será pago apenas clicando no valor correspondente.</p>
+
+                <form action="/Remessa/GravarValor" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="date">Valor da Percela</label>
+                            <input type="hidden" class="form-control" name="textIndice" value="@ViewBag.Indice" />
+                            <input type="text" class="form-control" id="date" name="txtValor" value="@ViewBag.Valor">
+                        </div>
+                        <div class="modal-footer">
+                            <div class="text-center">
+                                @*<a class="btn btn-success">
+                                    <input type="submit" value="Pagar" />
+                                </a>*@
+
+                                <a data-toggle="tooltip" title="Clique para selecionar este associado" class="btn btn-warning" href="@Url.Action("GravarValor", "Remessa", new { id = ViewBag.Indice, ch = true, busca = ViewBag.Busca })">
+                                        <i>Em Aberto</i>
+                                    </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <form action="/Remessa/GravarAcordo" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="date">Valor do Acordo</label>
+                            <input type="text" class="form-control" id="date" name="textLcm" value="@ViewBag.ValorAcordo">
+                        </div>
+                        <div class="modal-footer">
+                            @*<button class="btn btn-primary" type="button" data-dismiss="modal">Voltar</button>*@
+                            <div class="text-center">
+                                <a class="btn btn-success">
+                                    <input type="submit" value="Pagar" />
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <button class="btn btn-success" type="button" data-dismiss="modal">Voltar</button>
+
+            </div>
+        </div>
+
+        <!-- /.modal-content-->
+    </div>
+
+    <!-- /.modal-dialog-->
+</div>
+
+
+
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+
+
+

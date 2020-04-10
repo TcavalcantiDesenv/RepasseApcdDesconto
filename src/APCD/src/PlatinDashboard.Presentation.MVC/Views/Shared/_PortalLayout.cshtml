@@ -1,0 +1,337 @@
+﻿@using DevExpress.Web.Mvc.UI;
+@using PlatinDashboard.Presentation.MVC.Helpers
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <!-- Icons-->
+    <link rel="stylesheet" type="text/css" href="~/coreuilib/coreui/icons/css/coreui-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/simple-line-icons/css/simple-line-icons.css">
+
+    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="@Url.Content("~/img/brand/favicon.ico")" />
+
+    <!-- Main styles for this application-->
+    @Styles.Render("~/coreui/mainstyle/css")
+    <!--View Styles-->
+    @RenderSection("styles", required: false)
+    <!-- Bootstrap and necessary plugins-->
+    @Scripts.Render("~/coreui/plugins/js")
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid, Theme = "Material" },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart }
+    )
+    @Html.DevExpress().GetScripts(
+                new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                new Script { ExtensionSuite = ExtensionSuite.Editors },
+                new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+                new Script { ExtensionSuite = ExtensionSuite.Chart }
+            )
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+    <header class="app-header navbar">
+        <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+            <div class="navbar-brand-full">
+                <img src="~/img/brand/logo_loja1.png" width="245" height="58" alt="Legisig Logo" style="display: inline-block">
+            </div>
+            <img class="navbar-brand-minimized" src="~/img/brand/logo.png" width="50" height="35" alt="CoreUI Logo">
+        </a>
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="nav navbar-nav d-md-down-none">
+            <li class="nav-item px-3">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">Painel</a>
+            </li>
+            <li class="nav-item dropdown px-3">
+                <a class="nav-link" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="@Url.Action("Index", "Perfil")">
+                        <i class="fa fa-user"></i> Perfil
+                    </a>
+                    @if (this.IfClaim("UserType", "Admin") || this.IfClaim("UserType", "Subadmin") || this.IfClaim("UserType", "Manager"))
+                    {
+                        <a class="dropdown-item" href="@Url.Action("Index", "Usuarios")">
+                            <i class="fa fa-users"></i> Usuários
+                        </a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Midias")">
+                            <i class="fa fa-film"></i> Mídias
+                        </a>
+                    }
+                </div>
+            </li>
+            <li class="nav-item align-content-xl-stretch">
+                @if (this.IfClaim("UserType", "Master"))
+                {
+                    @Html.Partial("_ClientesPartial");
+                }
+            </li>
+        </ul>
+
+        @Html.Partial("_LoginPartial")
+
+    </header>
+    <div class="app-body">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <i class="nav-icon icon-speedometer"></i> Painel Geral
+                        </a>
+                    </li>
+
+
+                    @****************************************************************************************************@
+
+                    @if (this.IfClaim("ChartAtualizaCadastro", "Allowed") || this.IfClaim("CompanyType", "Master"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Empresas")">
+                                <i class="nav-icon fa fa-university"></i> Regionais
+                            </a>
+                        </li>
+
+                        @*<li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Calendario")">
+                    <i class="nav-icon fa fa-calendar"></i> Importar Regionais
+                </a>
+            </li>*@
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "ImportaRegionais")">
+                                <i class="nav-icon fa fa-upload"></i> Importar Regionais
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Regional")">
+                                <i class="nav-icon fa fa-pencil-square-o"></i> Lançar Pagamentos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Arquivos", "BaixaRetorno")">
+                                <i class="nav-icon fa fa-pencil-square-o"></i> Baixar Arquivos
+                            </a>
+                        </li>
+
+                        @*<li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Macon")">
+                    <i class="nav-icon fa fa-user-o"></i>Cadastro de Maçons
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Presencas")">
+                    <i class="nav-icon fa fa-users"></i>Cadastro de Presenças
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "ListaPresenca")">
+                    <i class="nav-icon fa fa-list-ol"></i>Lista de Presenças
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "GerenciarArquivos")">
+                    <i class="nav-icon fa fa-camera"></i> Arquivos de Imagem
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Trabalhos")">
+                    <i class="nav-icon fa fa-file-pdf-o"></i> Trabalhos e Pranchas
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Galeria")">
+                    <i class="nav-icon fa fa-picture-o"></i> Galeria de Imagem
+                </a>
+            </li>*@
+
+                        @*<li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon fa fa-television"></i> Menu Vídeos
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Midias")">
+                            <i class="fa fa-film"></i> Lista de Videos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Novo", "Midias")">
+                            <i class="fa fa-video-camera"></i>  Cadastro de Videos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Videos", "Videos")">
+                            <i class="fa fa-file-video-o"></i>  Galeria de Videos
+                        </a>
+                    </li>
+                </ul>
+            </li>*@
+                    }
+
+                    @*<li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+                <i class="nav-icon fa fa-sitemap"></i> Menus de Usuário
+            </a>
+            <ul class="nav-dropdown-items">
+                @if ((this.IfClaim("ChartAtualizaCadastro", "Allowed") ||
+              this.IfClaim("CompanyType", "Master")
+           ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("CadastroUsuario", "Macon")">
+                            <i class="nav-icon fa fa-address-card-o"></i>Atualizar Cadastro
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Familiar")">
+                            <i class="nav-icon fa fa-address-card-o"></i>Familiares
+                        </a>
+                    </li>
+                }
+
+                @if ((this.IfClaim("ChartListaPresenca", "Allowed") ||
+              this.IfClaim("CompanyType", "Master")
+           ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("CadastroUsuario", "Macon")">
+                            <i class="nav-icon fa fa-users"></i> Lista de Presenças
+                        </a>
+                    </li>
+                }
+
+                @if ((this.IfClaim("ChartGaleria", "Allowed") ||
+               this.IfClaim("CompanyType", "Master")
+            ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Galeria")">
+                            <i class="nav-icon fa fa-picture-o"></i> Galeria de Imagem
+                        </a>
+                    </li>
+                }
+
+                @if ((this.IfClaim("ChartLerBalaustre", "Allowed") ||
+             this.IfClaim("CompanyType", "Master")
+          ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "LerBalaustre")">
+                            <i class="nav-icon fa fa fa-file-word-o"></i>Leitor de Balaustre
+                        </a>
+                    </li>
+                }
+
+
+                @if ((this.IfClaim("ChartMeusVideos", "Allowed") ||
+                       this.IfClaim("CompanyType", "Master")
+                     ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Videos", "Videos")">
+                            <i class="nav-icon fa fa-file-video-o"></i>  Galeria de Videos
+                        </a>
+                    </li>
+                }
+
+                @if ((this.IfClaim("ChartCalendarioUser", "Allowed") ||
+                       this.IfClaim("CompanyType", "Master")
+                    ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Calendario")">
+                            <i class="nav-icon fa fa-calendar"></i> Cadastro de Eventos
+                        </a>
+                    </li>
+                }
+
+
+                @if ((this.IfClaim("ChartTrabalhosUser", "Allowed") ||
+                       this.IfClaim("CompanyType", "Master")
+                    ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Trabalhos")">
+                            <i class="nav-icon fa fa-file-pdf-o"></i> Trabalhos e Pranchas
+                        </a>
+                    </li>
+                }
+
+                @if ((this.IfClaim("ChartAoVivo", "Allowed") ||
+                    this.IfClaim("CompanyType", "Master")
+                    ))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Vivo")">
+                            <i class="nav-icon fa fa-vimeo"></i> Transmissão ao Vivo
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>*@
+
+
+
+
+
+
+                </ul>
+            </nav>
+            <button class="sidebar-minimizer brand-minimizer minimizer-btn" type="button"></button>
+        </div>
+        <main class="main">
+            @RenderSection("breadcrumb", required: false)
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <footer class="app-footer">
+        <div>
+            <a href="http://tcavalcanti" target="_blank">TCavalcanti Ltda.</a>
+            <span>&copy; 1987 - @DateTime.Now.Year</span>
+        </div>
+        <div class="ml-auto">
+            <span>Desenvolvido por </span>
+            <a href="http://tcavalcanti.com.br" target="_blank">TCavalcanti Ltda.</a>
+        </div>
+    </footer>
+    <!-- Plugins and scripts required by this view-->
+    @Scripts.Render("~/coreui/charts/js")
+    <!--View Modals-->
+    @RenderSection("modals", required: false)
+    <!--View Scripts-->
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.nav-item.nav-dropdown.open').each(function (ind, ele) {
+                    if (!$(ele).hasClass('first-level')) {
+                        $(ele).removeClass('open');
+                    }
+                });
+            }, 100)
+        });
+    </script>
+
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+</body>
+</html>

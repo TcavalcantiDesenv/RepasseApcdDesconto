@@ -1,0 +1,29 @@
+﻿@model Model.Entity.Agendamento
+@{
+    ViewBag.Title = "Deletar";
+}
+
+@section styles{
+    <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/compiled/elements.css" rel="stylesheet" />
+}
+<div class="col-md-12 text-center">
+    <h2>Remover Agendamento</h2>
+    <h3>Você tem certeza que deseja deletar esse Agendamento?</h3>
+    <div>
+        <h4>Agendamento</h4>
+        <h4>@Html.DisplayFor(model => model.DiaDaSemana)</h4>
+        <h4>@Html.DisplayFor(model => model.HoraDeExecucao)</h4>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Remover" class="btn btn-danger" /> |
+                @Html.ActionLink("Voltar para Agendamentos", "Index")
+            </div>
+        }
+    </div>
+</div>
+

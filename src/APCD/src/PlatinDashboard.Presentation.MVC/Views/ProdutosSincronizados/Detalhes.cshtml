@@ -1,0 +1,68 @@
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<Model.Entity.ProdutoSincronizado>
+
+@{
+    ViewBag.Title = "Detalhes Produto #" + ViewBag.Produtosincronizado.ProdutoSincronizadoId;
+}
+@section styles{
+    <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/compiled/elements.css" rel="stylesheet" />
+}
+<h2>
+    Produto Sincronizado #@ViewBag.Produtosincronizado.ProdutoSincronizadoId<small>Execução #@ViewBag.Produtosincronizado.ExecucaoId </small>
+    <div class="filter-block pull-right">
+        <a href="#" onclick="window.history.back()" class="btn btn-primary pull-right">
+            <i class="fa fa-plus-circle fa-lg"></i> Voltar
+        </a>
+    </div>
+</h2>
+<div class="col-md-12">
+    <div class="list-group text-center col-md-8 col-md-offset-2">
+        <div href="javascript:void(0)" class="list-group-item">
+            <h4 class="list-group-item-heading">Identificador</h4>
+            <p class="list-group-item-text">#@ViewBag.Produtosincronizado.ProdutoSincronizadoId</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Nome</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.Nome</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Ean</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.Ean</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Detalhes</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.Detalhes</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Descricao</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.Descricao</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Status</h4>
+            <p class="list-group-item-text"><span class="label label-large label-@(ViewBag.Produtosincronizado.Status == "Sincronizado com sucesso"  ? "success" : "danger")">@ViewBag.Produtosincronizado.Status</span></p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Preço De</h4>
+            <p class="list-group-item-text">R$ @ViewBag.Produtosincronizado.PrecoDe</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Preço Por</h4>
+            <p class="list-group-item-text">R$ @ViewBag.Produtosincronizado.PrecoPor</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Quantidade</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.Quantidade</p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Operação</h4>
+            <p class="list-group-item-text"><span class="label label-large label-@(ViewBag.Produtosincronizado.Operacao == "Adicionar"  ? "default" : "primary")">@ViewBag.Produtosincronizado.Operacao</span></p>
+        </div>
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading">Data Sincronização</h4>
+            <p class="list-group-item-text">@ViewBag.Produtosincronizado.DataSincronizacao</p>
+        </div>
+    </div>
+</div>
+
+

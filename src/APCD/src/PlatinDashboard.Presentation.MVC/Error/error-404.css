@@ -1,0 +1,230 @@
+@media all and (-ms-high-contrast: none) {
+  .wall {
+    background-image: none !important; } }
+.wall {
+  background-size: cover;
+  /*background-image: url('../images/error/outer-space.jpg');*/ }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0; }
+
+body {
+  background: #000;
+  text-align: center;
+  position: relative; }
+
+body:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle; }
+
+.wrapper {
+  z-index: 5000;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: table;
+  text-shadow: -1px -1px 0 #000,   1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+  .wrapper h1 {
+    color: #fff; }
+  .wrapper p {
+    display: inline-block;
+    padding: 0 30px;
+    color: #ccc;
+    font-size: 30px; }
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+      .wrapper p {
+        font-size: 20px; } }
+    @media only screen and (max-width: 767px) {
+      .wrapper p {
+        font-size: 12px; } }
+  .wrapper .row {
+    display: table-row;
+    transform-style: preserve-3d; }
+  .wrapper .cell {
+    display: table-cell;
+    vertical-align: middle; }
+  .wrapper .title {
+    text-transform: uppercase;
+    letter-spacing: 90px;
+    margin-right: -90px;
+    font-size: 40px; }
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+      .wrapper .title {
+        letter-spacing: 40px;
+        margin-right: -40px;
+        font-size: 30px; } }
+    @media only screen and (max-width: 767px) {
+      .wrapper .title {
+        letter-spacing: 20px;
+        margin-right: -20px;
+        font-size: 16px; } }
+  .wrapper .code {
+    font-size: 300px; }
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+      .wrapper .code {
+        font-size: 200px; } }
+    @media only screen and (max-width: 767px) {
+      .wrapper .code {
+        font-size: 100px; } }
+
+.footer {
+  z-index: 10000;
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 50px;
+  text-align: center;
+  color: #999; }
+  @media only screen and (max-width: 767px) {
+    .footer {
+      bottom: 5px; } }
+  .footer a {
+    color: #ccc; }
+    .footer a:hover {
+      color: #fff; }
+
+.logo {
+  background: url(../images/logo/rockettheme_logo.png) 50% 0 no-repeat;
+  display: inline-block;
+  width: 183px;
+  height: 40px; }
+
+.scene {
+  display: inline-block;
+  vertical-align: middle;
+  /*opacity: 0;*/
+  position: relative;
+  -webkit-perspective: 5px;
+  -moz-perspective: 5px;
+  perspective: 5px;
+  -webkit-perspective-origin: 50% 50%;
+  -moz-perspective-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+  /*@include animation(fadeIn 3s 1 linear);
+  @include animation-fill-mode(forwards);*/ }
+
+.wrap {
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  left: -500px;
+  top: -500px;
+  /*opacity: 0;*/
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /*@include animation(move 24s infinite linear);
+  @include animation-fill-mode(forwards);*/ }
+
+.wrap:nth-child(2) {
+  /*@include animation(move 24s infinite linear);
+  @include animation-delay(12s);*/ }
+
+.wall {
+  width: 100%;
+  height: 100%;
+  position: absolute; }
+
+.wall-right {
+  -webkit-transform: rotateY(90deg) translate3d(0, 0, 500px);
+  -moz-transform: rotateY(90deg) translate3d(0, 0, 500px);
+  -ms-transform: rotateY(90deg) translate3d(0, 0, 500px);
+  -o-transform: rotateY(90deg) translate3d(0, 0, 500px);
+  transform: rotateY(90deg) translate3d(0, 0, 500px); }
+
+.wall-left {
+  -webkit-transform: rotateY(-90deg) translate3d(0, 0, 500px);
+  -moz-transform: rotateY(-90deg) translate3d(0, 0, 500px);
+  -ms-transform: rotateY(-90deg) translate3d(0, 0, 500px);
+  -o-transform: rotateY(-90deg) translate3d(0, 0, 500px);
+  transform: rotateY(-90deg) translate3d(0, 0, 500px); }
+
+.wall-top {
+  -webkit-transform: rotateX(90deg) translate3d(0, 0, 500px);
+  -moz-transform: rotateX(90deg) translate3d(0, 0, 500px);
+  -ms-transform: rotateX(90deg) translate3d(0, 0, 500px);
+  -o-transform: rotateX(90deg) translate3d(0, 0, 500px);
+  transform: rotateX(90deg) translate3d(0, 0, 500px); }
+
+.wall-bottom {
+  -webkit-transform: rotateX(-90deg) translate3d(0, 0, 500px);
+  -moz-transform: rotateX(-90deg) translate3d(0, 0, 500px);
+  -ms-transform: rotateX(-90deg) translate3d(0, 0, 500px);
+  -o-transform: rotateX(-90deg) translate3d(0, 0, 500px);
+  transform: rotateX(-90deg) translate3d(0, 0, 500px); }
+
+.wall-back {
+  -webkit-transform: rotateX(180deg) translate3d(0, 0, 500px);
+  -moz-transform: rotateX(180deg) translate3d(0, 0, 500px);
+  -ms-transform: rotateX(180deg) translate3d(0, 0, 500px);
+  -o-transform: rotateX(180deg) translate3d(0, 0, 500px);
+  transform: rotateX(180deg) translate3d(0, 0, 500px); }
+
+@-webkit-keyframes move {
+  0% {
+    -webkit-transform: translate3d(0, 0, -500px) rotate(0deg);
+    opacity: 0; }
+  25% {
+    opacity: 1; }
+  75% {
+    opacity: 1; }
+  100% {
+    -webkit-transform: translate3d(0, 0, 500px) rotate(0deg);
+    opacity: 0; } }
+@-moz-keyframes move {
+  0% {
+    -moz-transform: translate3d(0, 0, -500px) rotate(0deg);
+    opacity: 0; }
+  25% {
+    opacity: 1; }
+  75% {
+    opacity: 1; }
+  100% {
+    -moz-transform: translate3d(0, 0, 500px) rotate(0deg);
+    opacity: 0; } }
+@keyframes move {
+  0% {
+    transform: translate3d(0, 0, -500px) rotate(0deg);
+    opacity: 0; }
+  25% {
+    opacity: 1; }
+  75% {
+    opacity: 1; }
+  100% {
+    transform: translate3d(0, 0, 500px) rotate(0deg);
+    opacity: 0; } }
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+#debug {
+  overflow: auto; }
+  #debug .backtrace > table {
+    color: #999;
+    border-color: #333;
+    text-align: left;
+    font-size: 12px; }
+    #debug .backtrace > table td {
+      border-color: #333; }
+
+/*# sourceMappingURL=error-404.css.map */

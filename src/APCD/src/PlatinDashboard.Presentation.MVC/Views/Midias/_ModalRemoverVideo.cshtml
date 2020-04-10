@@ -1,0 +1,32 @@
+﻿@model PlatinDashboard.Application.ViewModels.MidiaViewModels.VideoViewModel
+<div class="modal fade" id="delete-video-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remover vídeo @Model.Title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="delete-video-modal-message">Você tem certeza que deseja remover o vídeo @Model.Title?</p>
+            </div>
+            @using (Ajax.BeginForm("Remover", new { @controller = "Midias" },
+                                    new AjaxOptions
+                                    {
+                                        OnSuccess = "deleteVideoCallBack",
+                                        OnFailure = "deleteVideoFailed()"
+                                    }
+                                    ,
+                                    new { @id = "delete-video-form" }))
+            {
+                <div class="modal-footer">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.VideoId, new { id = "delete-video-id" })
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-danger ladda-button" data-style="zoom-out" onclick="submitForm(this, 'delete-video-form')">Confirmar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

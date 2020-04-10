@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PortalLayout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Arquivo AbcFarma</a>
+        </li>
+        <li class="breadcrumb-item active">Produtos AbcFarma</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Arquivos AbcFarma</h4>
+        @*<a href="@Url.Action("Novo", "Usuarios")" class="btn btn-success pull-right">
+                <i class="fa fa-newspaper-o"></i> Consultar Dados
+            </a>*@
+        <a href="@Url.Action("Index", "GeraArquivoAbcFarma")" class="btn btn-primary pull-right">
+            <i class="fa fa-server"></i> Processar Arquivos
+        </a>
+        <a href="@Url.Action("Recria", "BaixarArquivo")" class="btn btn-success pull-right">
+            <i class="fa fa-server"></i> Gerar Arquivo
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-target"></i>
+                    </th>
+                    <th>Nome do Arquivo</th>
+                    <th>IP</th>
+                    <th class="text-center">Tipo</th>
+                    <th>Tamanho</th>
+                    <th>Gerado em</th>
+                    <th>Baixar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in ViewBag.ListaProdutos)
+                {
+                <tr id="user-row-@user.IDArquivo">
+                    <td class="text-center">
+                        <div class="avatar">
+                            <div class="user-initial">
+                                <span>@user.Nome[0].ToString().ToUpper()</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div> @user.Nome</div>
+                    </td>
+                    <td>
+                        <div>  @ViewBag.ListaIP</div>
+                    </td>
+                    <td class="text-center">
+                        @user.Tipo
+                    </td>
+                    <td>
+                        @user.Tamanho
+                    </td>
+                    <td>
+                        @user.Gerado.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Download", "Download", new { id = user.IDArquivo })
+                    </td>
+                    @*
+        <a class="btn btn-info glyphicon-download" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, '@user.IDARQUIVO')">
+            <i class="fa fa-trash-o "></i>
+        </a>*@
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

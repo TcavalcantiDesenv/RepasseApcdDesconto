@@ -1,0 +1,65 @@
+﻿@using PlatinDashboard.Application.ViewModels.UserViewModels
+@using PlatinDashboard.Presentation.MVC.Helpers
+@model UserViewModel
+@{
+    ViewBag.Title = $"Perfil {Model.Name} {Model.LastName} | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Usuarios")">Usuários</a>
+        </li>
+        <li class="breadcrumb-item active">@Model.Name @Model.LastName</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="display: inline-block">Alterar seus Dados de Usuário</h4>
+                </div>
+                @Html.Partial("_Editar", new ProfileUserViewModel(Model))
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="display: inline-block">Alterar seus Dados Pessoais</h4>
+                    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-primary pull-right">Voltar</a>
+                </div>
+                @Html.Partial("_EditarMacon", new ProfileUserViewModel(Model))
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="display: inline-block">Alterar Senha</h4>
+                </div>
+                @Html.Partial("_TrocarSenha", new ChangePasswordViewModel { UserId = Model.UserId })
+            </div>
+        </div>
+    </div>
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/details.js"></script>
+    <script src="~/Scripts/viewsjs/userdetails.js"></script>
+}

@@ -1,0 +1,115 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers
+@model PlatinDashboard.Application.ViewModels.MidiaViewModels.VideoViewModel
+@{
+    ViewBag.Title = "Lançar Novo Balaustre | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/file-input/css")
+    <style>
+        .file-input-ajax-new {
+            width: 100%;
+        }
+
+        div.input-group.file-caption-main > div.input-group-btn > a {
+            background-color: #4dbd74;
+            color: white;
+        }
+
+        div.input-group.file-caption-main > div.input-group-btn > button {
+            background-color: #f86c6b;
+            color: white;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Midias")">
+                Mídias
+            </a>
+        </li>
+        <li class="breadcrumb-item active">Novo Balaustre</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="display: inline-block">Cadastrar novo Balaustre</h4>
+                <a href="@Url.Action("Index", "Midias")" class="btn btn-primary pull-right">Cancelar</a>
+            </div>
+            <div class="card-body" id="form-content">
+                <h5>Dados do Balaustre</h5>
+                @using (Ajax.BeginForm("Novo", "Midias", new AjaxOptions { OnBegin = "DesabilitarForm()", OnFailure = "console.log(data)", OnSuccess = "CarregarModal(data), console.log(data);", UpdateTargetId = "form-content", InsertionMode = InsertionMode.InsertAfter, HttpMethod = "Post" }, new { @class = "form-horizontal", @id = "Video-Form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            @Html.LabelFor(model => model.Title)
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Título e data do balaustre" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group col-sm-12">
+                            @Html.LabelFor(model => model.Description)
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Descrição do balaustre" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error invalid-feedback" })
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Criar</button>
+                    <a href="@Url.Action("Index", "Midias")" class="btn btn-danger">Cancelar</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section modals{
+    @Html.Partial("_ModalVideoFile")
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/coreui/file-input/script")
+    <script>
+        $('#video').fileinput({
+            language: 'pt-BR',
+            allowedFileExtensions: ['pdf', 'doc', 'docx', 'txt'],
+            showCancel: false,
+            fileActionSettings: { showUpload: false, showZoom: false, uploadIcon: '<i class="fa fa-upload "></i>', removeIcon: '<i class="fa fa-trash-o "></i>', },
+            maxFileCount: 1,
+            maxFileSize: 81920
+        });
+
+        $('#video').on('filebatchuploadcomplete', function (event, files, extra) {
+            setTimeout(function () {
+                $('#CadastrarVideo').modal("hide");
+                $('#Produto-Form button').attr('disabled', 'disabled');
+            }, 1500);
+            setTimeout(function () { window.location.replace("/Midias"); }, 3000);
+        });
+
+        function DesabilitarForm() {
+            $("#Video-Form input").prop("disabled", true);
+            $("#Video-Form textarea").prop("disabled", true);
+            $('#Video-Form button').button("loading");
+        }
+
+        function CarregarModal(video) {
+            $('#Video-Form button').button("reset");
+            $('#video').fileinput('refresh', { uploadExtraData: { videoId: video.VideoId } });
+            $('#CadastrarVideo').modal(({ backdrop: 'static', keyboard: false }));
+        }
+    </script>
+}
+

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Confirmar Sincronização";
+}
+<div class="col-md-12 text-center">
+    <h2>Confirmar Sincronização</h2>
+    <h3>Você tem certeza que deseja iniciar uma sincronização?</h3>
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions no-color col-md-3 col-md-offset-4">
+                <a href="@Url.Action("Sincronizar", "Execucoes")" class="btn btn-danger" style="float: right">Confirmar</a>
+                @Html.ActionLink("Voltar para Lista", "Index")
+            </div>
+        }
+    </div>
+</div>
+
+

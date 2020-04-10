@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Dashboard | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <style>
+        .col-md-7, .col-md-5, .col-md-4 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .col-form-label {
+            font-size: 17px;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Dashboard</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+    <div class="animated fadeIn">
+        @*<div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body pb-0">
+                        <div class="text-value">Total = @ViewBag.Total</div>
+                        <div>Cavaleiros Eleitos</div>
+                    </div>
+                    <div class="chart-wrapper mt-3 mx-3" style="height:30px;">
+                        <canvas id="card-chart1x" class="chart" height="70"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body pb-0">
+                        <button type="button" class="btn btn-transparent p-0 float-right">
+                            <i class="icon-location-pin"></i>
+                        </button>
+                        <div class="text-value">Aprendizes = @ViewBag.Aprendiz</div>
+                        <div>Cavaleiros Eleitos</div>
+                    </div>
+                    <div class="chart-wrapper mt-3 mx-3" style="height:30px;">
+                        <canvas id="card-chart2x" class="chart" height="70"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body pb-0">
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-settings"></i>
+                            </button>
+                        </div>
+                        <div class="text-value">Companheiros = @ViewBag.Companheiro</div>
+                        <div>Cavaleiros Eleitos</div>
+                    </div>
+                    <div class="chart-wrapper mt-3" style="height:30px;">
+                        <canvas id="card-chart3x" class="chart" height="70"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card text-white bg-danger">
+                    <div class="card-body pb-0">
+                        <div class="btn-group float-right">
+                            <button type="button" class="btn btn-transparent dropdown-toggle p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="icon-settings"></i>
+                            </button>
+                            @*<div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+                        </div>
+                        <div class="text-value">Mestres = ViewBag.Mestre</div>
+                        <div>Cavaleiros Eleitos</div>
+                    </div>
+                    <div class="chart-wrapper mt-3 mx-3" style="height:30px;">
+                        <canvas id="card-chart4x" class="chart" height="70"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--/.col-->
+        </div>*@
+    
+    </div>
+<div class="card">
+    @*<div class="card-header">
+        <h4 style="display: inline-block">Ultimos 10 Acessos do Dia</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-people"></i>
+                    </th>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>Cliente</th>
+                    <th>IP</th>
+                    <th>Data Acesso</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in ViewBag.Acessos)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>@user.Nome[0].ToString().ToUpper()</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>@user.Nome</div>
+                            <div class="small text-muted">
+                                Acessado em: @user.DataEntrada.ToString("dd/MM/yyyy")
+                            </div>
+                        </td>
+                        <td>
+                            @user.Usuario
+                        </td>
+                        <td>
+                            @user.Empresa
+                        </td>
+                        <td>
+                            @user.IP
+                        </td>
+                        <td>
+                            @user.DataEntrada
+                        </td>
+                        <td class="text-right">
+                            @*<a class="btn btn-success" href="@Url.Action("Detalhes", "Usuarios", new { id = user.IP })">
+                                <i class="fa fa-search-plus "></i>
+                            </a>
+                            <a class="btn btn-danger ladda-button" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, '@user.IP')">
+                                <i class="fa fa-trash-o "></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>*@
+</div>
+
+@section modals{
+    <div id="modal-section"></div>
+}
+@section scripts{
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/js/main.js"></script>
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+}

@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08420F00-ED7B-4C05-AF50-8099F76751E9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlatinDashboard.Infra.Data.Farmacia</RootNamespace>
+    <AssemblyName>PlatinDashboard.Infra.Data.Farmacia</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework6.Npgsql, Version=3.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework6.Npgsql.3.1.1\lib\net45\EntityFramework6.Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.10.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.6.10.7\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.8.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MySql.Data.Entity.6.8.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=3.1.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Npgsql.3.1.2\lib\net451\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\MySqlContext.cs" />
+    <Compile Include="Context\PostgreContext.cs" />
+    <Compile Include="EntityConfig\MySql\BalVenAllGraficoPorClsConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\BalVenAllGraficoTotalConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\ClsCabConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\ClsVenAllConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\ClsVenAllGraficoPorClsConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\ClsVenAllGraficoTotalConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\FunCabConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\GraficoWebConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\UadCabConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VenAllConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaBalconistaPorClassificacaoConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaBalconistaPorHoraConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaClassificacaoLojaSpConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaClassificacaoLojaTotalSpConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaLojaPorHoraConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VendaLojaPorMesConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VenUadClsConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VenUadClsDashConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VenUadConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VenUadMensalConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\ViewBalconistaConfiguration.cs" />
+    <Compile Include="EntityConfig\MySql\VItensPorClienteConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\BalVenAllGraficoPorClsConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\BalVenAllGraficoTotalConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\ClsCabConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\ClsVenAllConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\ClsVenAllGraficoPorClsConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\ClsVenAllGraficoTotalConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\FunCabConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\GraficoWebConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\UadCabConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VenAllConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VendaBalconistaPorClassificacaoConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VendaBalconistaPorHoraConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VendaLojaPorHoraConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VendaLojaPorMesConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VendasLojaPorDiaHoraConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VenUadClsConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VenUadClsDashConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VenUadConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VenUadMensalConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\ViewBalconistaConfiguration.cs" />
+    <Compile Include="EntityConfig\Postgre\VItensPorClienteConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BalVenAllGraficoPorClsRepository.cs" />
+    <Compile Include="Repositories\BalVenAllGraficoTotalRepository.cs" />
+    <Compile Include="Repositories\ClsCabRepository.cs" />
+    <Compile Include="Repositories\ClsVenAllGraficoPorClsRepository.cs" />
+    <Compile Include="Repositories\ClsVenAllGraficoTotalRepository.cs" />
+    <Compile Include="Repositories\ClsVenAllRepository.cs" />
+    <Compile Include="Repositories\FunCabRepository.cs" />
+    <Compile Include="Repositories\GraficoWebRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\UadCabRepository.cs" />
+    <Compile Include="Repositories\VenAllRepository.cs" />
+    <Compile Include="Repositories\VendaBalconistaPorClassificacaoRepository.cs" />
+    <Compile Include="Repositories\VendaBalconistaPorHoraRepository.cs" />
+    <Compile Include="Repositories\VendaClassificacaoLojaRepository.cs" />
+    <Compile Include="Repositories\VendaClassificacaoLojaTotalRepository.cs" />
+    <Compile Include="Repositories\VendaLojaPorHoraRepository.cs" />
+    <Compile Include="Repositories\VendaLojaPorMesRepository.cs" />
+    <Compile Include="Repositories\VendasLojaPorDiaHoraRepository.cs" />
+    <Compile Include="Repositories\VenUadClsDashRepository.cs" />
+    <Compile Include="Repositories\VenUadClsRepository.cs" />
+    <Compile Include="Repositories\VenUadMensalRepository.cs" />
+    <Compile Include="Repositories\VenUadRepository.cs" />
+    <Compile Include="Repositories\ViewBalconistaRepository.cs" />
+    <Compile Include="Repositories\VItensPorClienteRepository.cs" />
+    <Compile Include="StoredProcedures\GraficoWebLojaStoredProcedure.cs" />
+    <Compile Include="StoredProcedures\StoredProcedureBase.cs" />
+    <Compile Include="StoredProcedures\VendasClassificacaoLojaStoredProcedure.cs" />
+    <Compile Include="StoredProcedures\VendasClassificacaoLojaTotalStoredProcedure.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PlatinDashboard.Domain.Farmacia\PlatinDashboard.Domain.Farmacia.csproj">
+      <Project>{dc44e149-22cd-4e99-ad8b-76244910652e}</Project>
+      <Name>PlatinDashboard.Domain.Farmacia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

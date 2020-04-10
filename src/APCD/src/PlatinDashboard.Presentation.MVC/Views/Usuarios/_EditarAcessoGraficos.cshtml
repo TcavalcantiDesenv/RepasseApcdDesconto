@@ -1,0 +1,44 @@
+﻿@using PlatinDashboard.Application.ViewModels.UserViewModels;
+@using PlatinDashboard.Application.ViewModels.ChartViewModels;
+@model UserChartViewModel
+<div class="card-body" id="access-charts-content">
+    @using (Ajax.BeginForm("EditarAcessoGraficos", new { @controller = "Usuarios" },
+                            new AjaxOptions
+                            {
+                                OnSuccess = "changeAccessChartCallBack",
+                                OnFailure = "changeAccessChartFailed()"
+                            },
+                            new { @id = "access-charts-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.UserId, new { @id = "AccessChartUserId" })
+        <div class="row">    
+            @{
+                var count = 0;
+                foreach (var chart in (List<EditChartViewModel>)ViewBag.CompanyCharts.ChartViewModels)
+                {
+                    <div class="col-sm-6 col-md-3 text-center" style="display:inline-block">
+                        <label class="control-label" for="showEasing">@chart.Name</label>
+                        <input type="hidden" name="ChartViewModels[@count].ChartId" id="ChartViewModels[@count].ChartId" value="@chart.ChartId" />
+                        <input type="hidden" name="ChartViewModels[@count].Name" id="ChartViewModels[@count].Name" value="@chart.Name" />
+                        <input type="hidden" name="ChartViewModels[@count].ClaimType" id="ChartViewModels[@count].ClaimType" value="@chart.ClaimType" />
+                        <div>
+                            <label class="switch switch-label switch-pill switch-success">
+                                <input type="checkbox" class="switch-input" name="ChartViewModels[@count].HasAccess" 
+                                       id="ChartViewModels[@count].HasAccess" 
+                                       checked="@(Model.ChartViewModels.Any(c => c.ChartId == chart.ChartId))" 
+                                       value="true" @(chart.HasAccess ? "" : "disabled")>
+                                <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                            </label>
+                            <input name="ChartViewModels[@count].HasAccess" type="hidden" value="false">
+                        </div>
+                    </div>
+                    count++;
+                }
+            }
+        </div>
+        <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-out" id="access-charts-btn" onclick="submitForm(this, 'access-charts-form')">
+            <span class="ladda-label">Alterar</span>
+        </button>
+    }
+</div>

@@ -1,0 +1,306 @@
+﻿@model Model.Entity.Macon
+@{
+    ViewBag.Title = $"Usuário   | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/select2/css")
+    <style>
+        .select2-selection {
+            border: 1px solid #e4e7ea !important;
+        }
+
+        .locked-tag .select2-selection__choice__remove {
+            display: none !important;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Atualizar Maçon</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Atualizar Registro</h4>
+        <a href="@Url.Action("Index", "Macon")" class="btn btn-success pull-right">
+            <i class="fa icon-plus"></i> Voltar
+        </a>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group col-sm-6">
+                @Html.TextBoxFor(model => model.Id_Macon, new { style = "display:none" })
+            </div>
+            <div class="row">
+                <div class="form-group  col-sm-6">
+                    <label for="exampleInputEmail1">Nome</label>
+                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Maçon" }, Style = "background:#primary;" })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "error invalid-feedback" })
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Sobrenome</label>
+                    @Html.EditorFor(model => model.Nome_Tratamento, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Nome_Tratamento, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Data Iniciação</label>
+                    @Html.TextBoxFor(model => model.Dt_Iniciado, new { @type = "date", @class = "form-control datepicker", @Value = Model.Dt_Iniciado.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Dt_Iniciado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="exampleInputEmail1">Nº CIM</label>
+                    @Html.EditorFor(model => model.Cim, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Cim, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Grau</label>
+                    @Html.DropDownListFor(model => model.Id_Graduacao, ViewBag.ListaGraduacao as SelectList, "Selecione um Grau", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Id_Graduacao, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Loja</label>
+                    @Html.DropDownListFor(model => model.Id_Loja, ViewBag.ListaLojas as SelectList, "Selecione uma Loja", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Id_Loja, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Situação</label>
+
+                    @*@Html.EditorFor(model => model.Situacao, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.DropDownListFor(f => f.Estado_Civil, new SelectList(ViewBag.civil, "Id", "Nome"), new { @class = "form-control" })*@
+                    @Html.DropDownListFor(f => f.Situacao, new SelectList(ViewBag.Tipos, "Id", "Nome"), new { @class = "form-control" })
+
+
+                    @*@Html.DropDownListFor(model => model.Situacao, (IEnumerable<SelectListItem>)ViewBag.Situacao, htmlAttributes: new { @class = "form-control" })*@
+                    @*@Html.DropDownListFor(model => model.Situacao, ViewBag.Situacao as SelectList, "Situação do Maçon", htmlAttributes: new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(model => model.Situacao, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Email</label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Segundo Email</label>
+                    @Html.EditorFor(model => model.Email_Outros, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Email_Outros, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Indicado Por</label>
+                    @Html.EditorFor(model => model.correspondencia_end, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.correspondencia_end, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">RG</label>
+                    @Html.EditorFor(model => model.Num_Di, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Num_Di, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Orgão Emissor</label>
+                    @Html.EditorFor(model => model.Emissor_Di, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Emissor_Di, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">UF RG</label>
+                    @Html.EditorFor(model => model.Uf_Di, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Uf_Di, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Emissão RG</label>
+                    @Html.TextBoxFor(model => model.Dt_Emissao_Di, new { @type = "date", @class = "form-control datepicker", @Value = Model.Dt_Emissao_Di.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Dt_Emissao_Di, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">CPF</label>
+                    @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Data de Nascimento</label>
+                    @Html.TextBoxFor(model => model.Dt_Nascimento, new { @type = "date", @class = "form-control datepicker", @Value = Model.Dt_Iniciado.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Dt_Nascimento, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Naturalidade</label>
+                    @Html.EditorFor(model => model.Naturalidade, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Naturalidade, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Estado</label>
+                    @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Uf, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">País</label>
+                    @Html.EditorFor(model => model.Nacionalidade, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Nacionalidade, "", new { @class = "error invalid-feedback" })
+                </div>
+            <div class="form-group col-sm-3">
+                <label for="exampleInputEmail1">Religião</label>
+                @Html.EditorFor(model => model.Religiao, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: Católico, Evangelico, Espirita, etc" } })
+                @*@Html.DropDownListFor(model => model.Religiao, new SelectList(ViewBag.Religiao, "Id", "Nome"), new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.Religiao, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="exampleInputEmail1">Tipo Sanguineo</label>
+                @Html.EditorFor(model => model.Tipo_Sanguíneo, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: A+ O- AB+" } })
+                @*@Html.DropDownListFor(model => model.Tipo_Sanguíneo, new SelectList(ViewBag.TipoSangue, "Id", "Nome"), new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.Tipo_Sanguíneo, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="exampleInputEmail1">Sexo</label>
+                @Html.EditorFor(model => model.Sexo, new { htmlAttributes = new { @class = "form-control", placeholder = "", @readonly = "readonly" } })
+                @*@Html.DropDownListFor(model => model.Sexo, new SelectList(ViewBag.Sexo, "Id", "Nome"), new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "error invalid-feedback" })
+            </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Escolaridade</label>
+                    @Html.EditorFor(model => model.Escolaridade, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: Colegial, Superior Completo, Superior Incompleto, etc" } })
+                    @*@Html.DropDownListFor(model => model.Escolaridade, new SelectList(ViewBag.Escolaridade, "Id", "Nome"), new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(model => model.Escolaridade, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Estado Civil</label>
+                    @Html.DropDownListFor(model => model.Estado_Civil, new SelectList(ViewBag.Civil, "Id", "Nome"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Estado_Civil, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Data Casamento</label>
+                    @Html.TextBoxFor(model => model.Data_Casamento, new { @type = "date", @class = "form-control datepicker", @Value = Model.Dt_Iniciado.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Data_Casamento, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Titulo de Eleitor</label>
+                    @Html.EditorFor(model => model.Tit_Eleitor, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Tit_Eleitor, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Seção</label>
+                    @Html.EditorFor(model => model.Secao_Eleitoral, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Secao_Eleitoral, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Zona</label>
+                    @Html.EditorFor(model => model.Zona_Eleitoral, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Zona_Eleitoral, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Celular</label>
+                    @Html.EditorFor(model => model.celular, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.celular, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Telefone Fixo</label>
+                    @Html.EditorFor(model => model.tel_res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.tel_res, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="exampleInputEmail1">Nome do Pai</label>
+                    @Html.EditorFor(model => model.Nome_Pai, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Nome_Pai, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group  col-sm-6">
+                    <label for="exampleInputEmail1">Nome da Mãe</label>
+                    @Html.EditorFor(model => model.Nome_Mae, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Nome_Mae, "", new { @class = "error invalid-feedback" })
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="badge badge-dark">ENDEREÇO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="exampleInputEmail1">Endereço</label>
+                    @Html.EditorFor(model => model.End_Res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.End_Res, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">Bairro</label>
+                    @Html.EditorFor(model => model.Bairro_Res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Bairro_Res, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="exampleInputEmail1">CEP</label>
+                    @Html.EditorFor(model => model.Cep_Res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Cep_Res, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="exampleInputEmail1">Estado</label>
+                    @Html.EditorFor(model => model.Cidade_Res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Cidade_Res, "", new { @class = "error invalid-feedback" })
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="exampleInputEmail1">Municipio</label>
+                    @Html.EditorFor(model => model.Uf_Res, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                    @Html.ValidationMessageFor(model => model.Uf_Res, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12">
+
+                    <label for="exampleInputEmail1">Observações Gerais</label>
+                    @Html.TextAreaFor(model => model.obs, new { @class = "form-control", placeholder = "" })
+                    @Html.ValidationMessageFor(model => model.obs, "", new { @class = "error invalid-feedback" })
+                </div>
+            </div>
+            <div class="form-actions col-md-offset-2">
+                <input class="btn btn-danger" type="submit" name="btnsalvar" value="Salvar" />
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/select2/script")
+    <script src="~/Scripts/viewsjs/user.js"></script>
+    <script src="~/Scripts/viewsjs/details.js"></script>
+    <script src="~/Scripts/viewsjs/userdetails.js"></script>
+}
+
+
+
+

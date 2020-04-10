@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Dashboard | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <link href="~/coreuilib/spinkit/css/spinkit.css" rel="stylesheet" />
+    <style>
+        .dataTable tr {
+            text-align: center;
+        }
+
+        .col-form-label {
+            font-size: 17px;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+
+
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                @*<div class="col-sm-12">
+                    <iframe src="http://hiltonslima-001-site8.btempurl.com/agenda"  frameborder="0" marginheight="0" marginwidth="0" scrolling="no" width="1243" height="600"></iframe>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section modals{
+    <div id="modal-section"></div>
+}
+@section scripts{
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/coreuilib/chart.js/js/Chart.min.js"></script>
+    <script src="~/ContentLegado/Dashboard/js/moment.min.js"></script>
+    <script src="~/Scripts/chartsjs/dashboard.v1.0.3.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+
+    @Scripts.Render("~/coreui/datatables/js")
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            generateGraficoFaturamento('faturamentoClassificacao', 'chartFaturamentoClassificacao');
+            generateGridVendas();
+            setTimeout(function () {
+                generateGridVendasPorLoja();
+                generateGridVendasMensalPorLoja();
+            }, 2000)
+
+            jQuery.fn.dataTableExt.oSort['numeric-comma-asc'] = function (a, b) {
+                var x = (a == "-") ? 0 : a.replace(".", "").replace(".", "").replace(/,/, ".");
+                console.log(x);
+                var y = (b == "-") ? 0 : b.replace(".", "").replace(".", "").replace(/,/, ".");
+                x = parseFloat(x);
+                y = parseFloat(y);
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            };
+
+            jQuery.fn.dataTableExt.oSort['numeric-comma-desc'] = function (a, b) {
+                var x = (a == "-") ? 0 : a.replace(".", "").replace(".", "").replace(/,/, ".");
+                var y = (b == "-") ? 0 : b.replace(".", "").replace(".", "").replace(/,/, ".");
+                x = parseFloat(x);
+                y = parseFloat(y);
+                return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+            };
+        })
+    </script>
+}

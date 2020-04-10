@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Indicador Geral | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <style>
+        .col-md-7, .col-md-5, .col-md-4 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .col-form-label {
+            font-size: 17px;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Indicador Geral</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="animated fadeIn">
+    <row class="row">
+        <div class="card col-md-12">
+            <div class="card-body">
+                <div class="row">
+                    <!--/.col-->
+                    <div class="col-sm-12 d-md-block">
+                        <button type="button" class="btn btn-primary float-right d-md-block ladda-button" id="indice-gerenciais-btn" onclick="carregarGraficos(this)">
+                            <i class="icon-magnifier"></i> Buscar
+                        </button>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Loja</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                @Html.DropDownList("loja", (IEnumerable<SelectListItem>)ViewBag.Stores, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Balconista</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" id="balconista"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Ano</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                @Html.DropDownList("ano", (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.col-->
+                </div>
+                <!--/.row-->
+            </div>
+        </div>
+    </row>
+    <div class="row">
+        <div class="col-sm-12 col-md-12" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Valor Liquído
+                </div>
+                <div class="card-body">
+                    <label id="valorLiquidoMes-legenda"></label>
+                    <canvas id="valorLiquidoMes"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Ticket Medio
+                </div>
+                <div class="card-body">
+                    <label id="ticketMedioMes-legenda"></label>
+                    <canvas id="ticketMedioMes"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Total de Quantidade Vendida
+                </div>
+                <div class="card-body">
+                    <label id="totalItensVendidosMes-legenda"></label>
+                    <canvas id="totalItensVendidosMes"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Total de Clientes
+                </div>
+                <div class="card-body">
+                    <label id="totalClientesMes-legenda"></label>
+                    <canvas id="totalClientesMes"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Quantidade Vendida por Cliente
+                </div>
+                <div class="card-body">
+                    <label id="itensPorCliente-legenda"></label>
+                    <canvas id="itensPorCliente"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Vendas por Horário
+                </div>
+                <div class="card-body">
+                    <span id="loading-vendasBalconistaPorHora"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="MesAtual" hidden="hidden" name="MesAtual" value="@DateTime.Now.Month + 1" />
+<input id="AnoAtual" hidden="hidden" name="AnoAtual" value="@DateTime.Now.Year" />
+@section modals{
+    <div id="modal-section"></div>
+}
+@section scripts{
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/chartsjs/indicadorgeralbalconista.v1.0.1.js"></script>
+    <script src="~/Scripts/chartsjs/balconistashora.v1.0.1.js"></script>
+    <script src="~/ContentLegado/Dashboard/js/highcharts.js"></script>
+    <script src="~/ContentLegado/Dashboard/js/highcharts-more.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            CarregarDadosBalconistas();
+            setTimeout(function () {
+                LucroLiquidoMes();
+                TickeMedioMes();
+                TotalClientesMes();
+                TotaltensVendidosMes();
+                ItensPorCliente();
+                carregarGraficoVendasBalconistaPorHoraIndicador('vendasBalconistaPorHora', 'chartVendasBalconistaPorHora');
+            }, 2000);            
+        });
+
+        $('#loja').on('change', function () {
+            $('#balconista').empty();
+            CarregarDadosBalconistas();
+        });
+    </script>
+}

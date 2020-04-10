@@ -1,0 +1,311 @@
+﻿@model Model.Entity.Macon
+@{
+    ViewBag.Title = $"Usuário   | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/select2/css")
+    <style>
+        .select2-selection {
+            border: 1px solid #e4e7ea !important;
+        }
+
+        .locked-tag .select2-selection__choice__remove {
+            display: none !important;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Atualizar Maçon</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Deseja Excluir o Cadastro do Ir.'. @ViewBag.Irmao ?</h4>
+        <a href="@Url.Action("DeleteConfirmado", "Macon", new { id = ViewBag.ID })" class="btn btn-danger pull-right">Excluir</a>
+    </div>
+    <div class="row">
+        <div class="form-group  col-sm-12">
+            <a href="@Url.Action("Index", "Macon", new { id = ViewBag.ID })" class="btn btn-success pull-right">Voltar</a>
+        </div>
+    </div>
+    @*<div class="card-body">  <a href="@Url.Action("Index", "Usuarios")" class="btn btn-primary pull-right">Voltar</a>
+            @using (Html.BeginForm())
+            {
+                <div class="row">
+                    <div class="form-group  col-sm-6">
+                        <label for="exampleInputEmail1">Nome</label>
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" }, Style = "background:#primary;" })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "error invalid-feedback" })
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Apelido</label>
+                        @Html.EditorFor(model => model.Nome_Tratamento, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Nome_Tratamento, "", new { @class = "error invalid-feedback" })
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Data Iniciação</label>
+                        @Html.EditorFor(model => model.Dt_Iniciado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Dt_Iniciado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="exampleInputEmail1">Nº CIM</label>
+                        @Html.EditorFor(model => model.Cim, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Cim, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Grau</label>
+                        @Html.DropDownListFor(model => model.Id_Graduacao, ViewBag.ListaGraduacao as SelectList, "Selecione um Grau", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cim, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Loja</label>
+                        @Html.DropDownListFor(model => model.Id_Loja, ViewBag.ListaLojas as SelectList, "Selecione uma Loja", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cim, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Situação</label>
+                        @Html.EditorFor(model => model.Situacao, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Situacao, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Email</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Segundo Email</label>
+                        @Html.EditorFor(model => model.Email_Outros, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Email_Outros, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Indicado Por</label>
+                        @Html.EditorFor(model => model.correspondencia_end, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.correspondencia_end, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">RG</label>
+                        @Html.EditorFor(model => model.Num_Di, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Num_Di, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Orgão Emissor</label>
+                        @Html.EditorFor(model => model.Emissor_Di, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Emissor_Di, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">UF RG</label>
+                        @Html.EditorFor(model => model.Uf_Di, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Uf_Di, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Emissão RG</label>
+                        @Html.EditorFor(model => model.Dt_Emissao_Di, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Dt_Emissao_Di, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">CPF</label>
+                        @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Data de Nascimento</label>
+                        @Html.EditorFor(model => model.Dt_Nascimento, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Dt_Nascimento, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Naturalidade</label>
+                        @Html.EditorFor(model => model.Naturalidade, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Naturalidade, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Estado</label>
+                        @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Uf, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">País</label>
+                        @Html.EditorFor(model => model.Nacionalidade, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Nacionalidade, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Religião</label>
+                        @Html.EditorFor(model => model.Religiao, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Religiao, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Tipo Sanguineo</label>
+                        @Html.EditorFor(model => model.Tipo_Sanguíneo, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Tipo_Sanguíneo, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Sexo</label>
+                        @Html.EditorFor(model => model.Sexo, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "error invalid-feedback" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Escolaridade</label>
+                        @Html.EditorFor(model => model.Escolaridade, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Escolaridade, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Estado Civil</label>
+                        @Html.EditorFor(model => model.Estado_Civil, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Estado_Civil, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Data Casamento</label>
+                        @Html.EditorFor(model => model.Data_Casamento, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Data_Casamento, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Titulo de Eleitor</label>
+                        @Html.EditorFor(model => model.Tit_Eleitor, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Tit_Eleitor, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Seção</label>
+                        @Html.EditorFor(model => model.Secao_Eleitoral, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Secao_Eleitoral, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Zona</label>
+                        @Html.EditorFor(model => model.Zona_Eleitoral, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Zona_Eleitoral, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Celular</label>
+                        @Html.EditorFor(model => model.celular, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.celular, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Telefone Fixo</label>
+                        @Html.EditorFor(model => model.tel_res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.tel_res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="exampleInputEmail1">Nome do Pai</label>
+                        @Html.EditorFor(model => model.Nome_Pai, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Nome_Pai, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group  col-sm-3">
+                        <label for="exampleInputEmail1">Nome da Mãe</label>
+                        @Html.EditorFor(model => model.Nome_Mae, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Nome_Mae, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group  col-sm-3">
+                        <label for="exampleInputEmail1">Código</label>
+                        @Html.EditorFor(model => model.Id_Macon, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="badge badge-dark">ENDEREÇO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="exampleInputEmail1">Endereço</label>
+                        @Html.EditorFor(model => model.End_Res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.End_Res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">Bairro</label>
+                        @Html.EditorFor(model => model.Bairro_Res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Bairro_Res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="exampleInputEmail1">CEP</label>
+                        @Html.EditorFor(model => model.Cep_Res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Cep_Res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="exampleInputEmail1">Estado</label>
+                        @Html.EditorFor(model => model.Cidade_Res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Cidade_Res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="exampleInputEmail1">Municipio</label>
+                        @Html.EditorFor(model => model.Uf_Res, new { htmlAttributes = new { @class = "form-control",  @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.Uf_Res, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+
+                        <label for="exampleInputEmail1">Observações Gerais</label>
+                        @Html.TextAreaFor(model => model.obs, new { @class = "form-control",  @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.obs, "", new { @class = "error invalid-feedback" })
+                    </div>
+                </div>
+                <div class="form-actions col-md-offset-2">
+                    <input type="submit" value="Excluir" class="btn btn-danger" />
+                </div>
+            }
+        </div>*@
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/select2/script")
+    <script src="~/Scripts/viewsjs/user.js"></script>
+    <script src="~/Scripts/viewsjs/details.js"></script>
+    <script src="~/Scripts/viewsjs/userdetails.js"></script>
+    @*<script>
+            bindDocumentReady();
+            bindUserTypeChange();
+            var userStoresIds = [];
+            @foreach (var userStoreId in @ViewBag.LoggedUser.UserStoresIds)
+            {
+                @:userStoresIds.push(@userStoreId);
+            }
+            disableSomeOptions(userStoresIds);
+        </script>*@
+}
+
+
+
+
+

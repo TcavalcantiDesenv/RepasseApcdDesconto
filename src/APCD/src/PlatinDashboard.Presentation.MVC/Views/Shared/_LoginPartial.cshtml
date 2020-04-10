@@ -1,0 +1,14 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <div class="nav navbar-nav ml-auto">        
+        <ul class="nav navbar-nav">
+            <li class="nav-item px-3">
+                <a class="nav-link" href="javascript:document.getElementById('logout-form').submit()">Sair</a>
+            </li>
+        </ul>
+        @using (Html.BeginForm("Sair", "Acesso", FormMethod.Post, new { id = "logout-form" }))
+        {
+            
+        }
+    </div>
+}

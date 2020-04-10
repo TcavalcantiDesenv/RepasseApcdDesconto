@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Voltar";
+}
+
+@{
+    ViewBag.Title = "Acesso | Portal APCD";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card-group">
+            <div class="card p-4">
+                <div class="card-body text-center">
+                    <div class="col-md-12 text-center">
+                        <img src="~/img/brand/logo_loja.png" width="300" height="46" alt="Loja Logo" style="display: inline-block">
+                    </div>
+                    <br />
+                    @*return RedirectToAction("Index", "Remessa", new { id = Session["CODREGIONAL"] });*@
+                    @using (@Html.BeginForm("Index", "Remessa", new { id = Session["CODREGIONAL"] }, FormMethod.Post, new { id = "login-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <p class="text-muted">CAMPO DATA DE CRÉDITO OBRIGATÓRIO!</p>
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary px-4 ladda-button" data-style="zoom-out" onclick="submitForm(this, 'login-form')">VOLTAR</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+}

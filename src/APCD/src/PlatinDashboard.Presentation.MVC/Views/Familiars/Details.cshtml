@@ -1,0 +1,98 @@
+﻿@model Model.Entity.Familiar
+
+@{
+    ViewBag.Title = "Details";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Familiares</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Detalhes de Familiar</h4>
+        <a href="@Url.Action("Index", "Familiars")" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Voltar
+        </a>
+    </div>
+    <div class="card-body">
+
+        <div>
+            <h4>Detalhes</h4>
+            <hr />
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Id_Macon)
+                        @Html.DisplayFor(model => model.Id_Macon)
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Id_Loja)
+                            @Html.DisplayFor(model => model.Id_Loja)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Cim)
+                        @Html.DisplayFor(model => model.Cim)
+                    </div>
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Nome)
+                        @Html.DisplayFor(model => model.Nome)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Email)
+                        @Html.DisplayFor(model => model.Email)
+                    </div>
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Sexo)
+                        @Html.DisplayFor(model => model.Sexo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Grau)
+                        @Html.DisplayFor(model => model.Grau)
+                    </div>
+                    <div class="form-group col-sm-6">
+                        @Html.DisplayNameFor(model => model.Aniversario)
+                        @Html.DisplayFor(model => model.Aniversario)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section scripts{
+        @Scripts.Render("~/bundles/unobstrusive")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/coreui/ladda/js")
+        @Scripts.Render("~/coreui/select2/script")
+        <script src="~/Scripts/viewsjs/user.js"></script>
+        <script src="~/Scripts/viewsjs/details.js"></script>
+        <script src="~/Scripts/viewsjs/userdetails.js"></script>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Familiar }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }

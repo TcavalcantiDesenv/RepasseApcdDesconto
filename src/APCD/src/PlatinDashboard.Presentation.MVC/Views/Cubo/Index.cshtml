@@ -1,0 +1,159 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers;
+@using PlatinDashboard.Presentation.MVC.Models.Options;
+@model IEnumerable<object>
+
+@{
+    PivotGridChartIntegrationDemoOptions options = (PivotGridChartIntegrationDemoOptions)Session["DemoOptions"];
+    PivotGridSettings pivotGridSettings = PivotGridCuboHelper.PivotChartIntegrationSettings(options);
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <link href="~/coreuilib/spinkit/css/spinkit.css" rel="stylesheet" />
+    <style>
+        .col-md-7, .col-md-5, .col-md-4 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .dxpLite_Material .dxp-current {
+            background-color: #640501 !important;
+        }
+        .dxpLite_Material:not(.dxpLiteDisabled_Material) .dxp-current.dxp-num:hover {
+            background-color: #640501 !important;
+        }
+        .dxpgLoadingPanel_Material .dxlp-loadingImage {
+            animation: dxLoadSpinSys 1s linear infinite;
+            border: 4px solid #640501 !important;
+            border-top: 4px solid #EEE !important;
+        }
+        .dxmLite_Material .dxm-popup .dxm-hovered, .dxmLite_Material .dxm-popup .dxm-hovered a.dx {
+            color: #640501 !important;
+        }
+        .dxbButton_Material {
+            background-color: #640501 !important;
+        }
+        .dxbButtonHover_Material {
+            background-color: #640501 !important;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Dados em Cubo</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            PrepareShowPointLabelStyles();
+            $("#ChartType").change(function () {
+                PrepareShowPointLabelStyles();
+            });
+        });
+        function UpdateChart() {
+            webChart.PerformCallback();
+        }
+        function OnBeginChartCallback(s, e) {
+            pivotGrid.FillStateObject(e.customArgs);
+        }
+        function PrepareShowPointLabelStyles() {
+            if ($("#ChartType option:selected").text() == "SwiftPlot") {
+                $("#ShowPointLabels").attr("disabled", "disabled");
+                $("label[for='ShowPointLabels']").css("color", "#aaa");
+            } else {
+                $("#ShowPointLabels").removeAttr("disabled");
+                $("label[for='ShowPointLabels']").css("color", "");
+            }
+        }
+    </script>
+@using (Html.BeginForm())
+{    
+    <div class="animated fadeIn">
+        <div class="card">
+            <div class="card-header">
+                <div class="col-sm-4">
+                    <h4 class="card-title mb-0">Dados em Cubo</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="accordion" role="tablist">                
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingTwo">
+                            <h5 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" href="#chart" aria-expanded="false" aria-controls="collapseTwo">
+                                    Gráfico Dinâmico
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="chart" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="col-md-3">
+                                    <label class="checkBox" for="ChartType" style="margin-left: 5px;">Tipo de Gráfico:</label>
+                                    @Html.DropDownList("ChartType", new SelectList(PivotGridCuboHelper.GetSupportedChartTypes(), options.ChartType), new { @class = "form-control"})
+                                </div>
+                                <div class="col-sm-2 text-center" style="display: inline-block">
+                                    <label for="Active">Mostrar Total da Coluna</label>
+                                    <div>
+                                        <label class="switch switch-label switch-pill switch-success">
+                                            <input type="checkbox" class="switch-input" name="ShowColumnGrandTotals" id="ShowColumnGrandTotals" checked="@options.ShowColumnGrandTotals" value="true">
+                                            <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                                        </label>
+                                        <input name="ShowColumnGrandTotals" type="hidden" value="false">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center" style="display: inline-block">
+                                    <label for="Active">Gerar séries da Coluna</label>
+                                    <div>
+                                        <label class="switch switch-label switch-pill switch-success">
+                                            <input type="checkbox" class="switch-input" name="GenerateSeriesFromColumns" id="GenerateSeriesFromColumns" checked="@options.GenerateSeriesFromColumns" value="true">
+                                            <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                                        </label>
+                                        <input name="GenerateSeriesFromColumns" type="hidden" value="false">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center" style="display: inline-block">
+                                    <label for="Active">Mostrar Lables com valores</label>
+                                    <div>
+                                        <label class="switch switch-label switch-pill switch-success">
+                                            <input type="checkbox" class="switch-input" name="ShowPointLabels" id="ShowPointLabels" checked="@options.ShowPointLabels" value="true">
+                                            <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                                        </label>
+                                        <input name="ShowPointLabels" type="hidden" value="false">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center" style="display: inline-block">
+                                    <label for="Active">Mostrar Total das linhas</label>
+                                    <div>
+                                        <label class="switch switch-label switch-pill switch-success">
+                                            <input type="checkbox" class="switch-input" name="ShowRowGrandTotals" id="ShowRowGrandTotals" checked="@options.ShowRowGrandTotals" value="true">
+                                            <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                                        </label>
+                                        <input name="ShowRowGrandTotals" type="hidden" value="false">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-center" style="display: inline-block">                                    
+                                    <input type="submit" value="Aplicar" class="btn btn-primary" />
+                                </div>
+                                <div class="row">
+                                    @Html.Partial("_DynamicChart", PivotGridExtension.GetDataObject(pivotGridSettings, Model))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("_PivotGrid", Model)
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Model.Entity.Familiar>
+@{
+    ViewBag.Title = "Empresas | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Familiares</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Cadastro de Familiares</h4>
+        <a href="@Url.Action("Create", "Familiars")" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Criar
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-responsive-sm datatable dataTable no-footer" id="companiesTable">
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Id_Macon)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id_Loja)
+                </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Cim)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sexo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Grau)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Aniversario)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Id_Macon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id_Loja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cim)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sexo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grau)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aniversario)
+                </td>
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id_Familiar }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id_Familiar }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id_Familiar })
+                </td>*@
+                <td class="text-right">
+                    <a class="btn btn-success" data-toggle="tooltip" data-placement="right" ToolTip="My tooltip text" href="@Url.Action("Edit", "Familiars", new { id = item.Id_Familiar })">
+                        <i class="fa fa-edit "></i>
+                    </a>
+                    <a class="btn btn-warning" href="@Url.Action("Details", "Familiars", new { id = item.Id_Familiar })">
+                        <i class="fa fa-file-archive-o "></i>
+                    </a>
+                    <a class="btn btn-danger" href="@Url.Action("Delete", "Familiars", new { id = item.Id_Familiar })">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+

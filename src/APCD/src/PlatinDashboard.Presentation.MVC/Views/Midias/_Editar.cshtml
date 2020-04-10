@@ -1,0 +1,30 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers
+@model PlatinDashboard.Application.ViewModels.MidiaViewModels.VideoViewModel
+<div class="card-body" id="form-content">
+    @using (Ajax.BeginForm("Editar", new { @controller = "Midias" },
+        new AjaxOptions
+        {
+            OnSuccess = "editVideoCallBack",
+            OnFailure = "editVideoFailed()"
+        },
+                          new { @id = "edit-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.VideoId)
+        <div class="row">
+            <div class="form-group col-sm-12">
+                @Html.LabelFor(model => model.Title)
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Título do vídeo" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-12">
+                @Html.LabelFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Descrição do vídeo" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success ladda-button" data-style="zoom-out" id="edit-btn" onclick="submitForm(this, 'edit-form')">
+            <span class="ladda-label">Alterar</span>
+        </button>
+    }
+</div>

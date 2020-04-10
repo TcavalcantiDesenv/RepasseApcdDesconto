@@ -1,0 +1,122 @@
+﻿@model Model.Entity.Familiar
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Excluir Familiar</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Cadastro de Sistemas</h4>
+        <a href="@Url.Action("Index", "Sistemas")" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Voltar
+        </a>
+    </div>
+    <div class="card-body">
+
+        <h3> Deseja excluir o registro abaixo ?</h3>
+        <div>
+            <div>
+                <h4>Familiar</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Id_Macon)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Id_Macon)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Id_Loja)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Id_Loja)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cim)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Cim)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nome)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Sexo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Sexo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Grau)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Grau)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Aniversario)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Aniversario)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-default" /> |
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+

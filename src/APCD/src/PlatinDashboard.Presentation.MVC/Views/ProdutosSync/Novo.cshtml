@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Novo";
+}
+
+<h2>Novo</h2>
+@section Styles{
+    @Styles.Render("~/coreui/select2/css")
+    <style>
+        .select2-selection {
+            border: 1px solid #e4e7ea !important;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Usuarios")">Usuários</a>
+        </li>
+        <li class="breadcrumb-item active">Novo Usuário</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="display: inline-block">Cadastrar novo Usuário</h4>
+                <a href="@Url.Action("Index", "Usuarios")" class="btn btn-primary pull-right">Cancelar</a>
+            </div>
+            <div class="card-body">
+                <h5>Dados do Usuário</h5>
+                @using (@Html.BeginForm("Novo", "Usuarios", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            Nome
+                            Produto
+                        </div>
+                        <div class="form-group col-sm-6">
+                            Nome
+                            Produto
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        Nome
+                        Produto
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            Nome
+                            Produto
+                        </div>
+                        @if ("Manager" == "Manager")
+                        {
+                        <div class="form-group col-sm-4">
+                            Nome
+                            Produto
+                        </div>
+                        }
+                        else if ("Manager" == "Subadmin")
+                        {
+                        <div class="form-group col-sm-4">
+                            Nome
+                            Produto
+                        </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            Nome
+                            Produto
+                        </div>
+                        <div class="form-group col-sm-6">
+                            Nome
+                            Produto
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Criar</button>
+                    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-danger">Cancelar</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/select2/script")
+    <script src="~/Scripts/viewsjs/user.js"></script>
+    <script>
+        bindDocumentReady();
+        bindUserTypeChange();
+    </script>
+}

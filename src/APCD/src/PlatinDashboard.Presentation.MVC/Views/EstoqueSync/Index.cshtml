@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Usuários</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Estoque Magento</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-people"></i>
+                    </th>
+                    <th>Produto</th>
+                    <th class="text-center">Ean</th>
+                    <th class="text-center">Fornecedor</th>
+                    <th>Departamento</th>
+                    <th class="text-center">Preço</th>
+                    <th class="text-center">Quantidade</th>
+                    <th class="text-center">Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in @ViewBag.TesteCliente)
+                {
+                    <tr id="user-row- @ViewBag.TesteCliente">
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>D</span>
+                                </div>
+                                @if (true)
+                                {
+                                    <span class="avatar-status badge-success"></span>
+                                }
+                                else
+                                {
+                                    <span class="avatar-status badge-danger"></span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div> Dorflex</div>
+                            <div class="small text-muted">
+                                Cadastro em: 06/04/2018
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            7895389139563
+                        </td>
+                        <td class="text-center">
+                            Dismed
+                        </td>
+                        <td>
+                            Perfumaria
+                        </td>
+                        <td>
+                            R$ 10,00
+                        </td>
+                        <td class="text-center">
+                            12 pçs
+                        </td>
+                        <td class="text-center">
+                            @if (true)
+                            {
+                                <span class="badge badge-success">Ativo</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Desativado</span>
+                            }
+                        </td>
+
+                        <td class="text-right">
+                            <a class="btn btn-success" href="@Url.Action("Index", "ProdutoSyncEditar", new { id = ViewBag.TesteCliente })">
+                                <i class="fa fa-search-plus "></i>
+                            </a>
+                            @*<a class="btn btn-danger ladda-button" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, ' @ViewBag.TesteCliente')">
+                                    <i class="fa fa-trash-o "></i>
+                                </a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section modals{
+    <div id="modal-section"></div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/userindex.js"></script>
+    <script>
+        $(document).ready(function () {
+            initializeUserTable();
+        });
+    </script>
+}
+
+
+

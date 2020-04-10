@@ -1,0 +1,163 @@
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<Model.Entity.Agendamento>
+@{
+    ViewBag.Title = "Index";
+}
+
+@section styles{
+    <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/compiled/elements.css" rel="stylesheet" />
+}
+<div class="col-md-12 text-center">
+    <h2>Agendamento de Sincronizações</h2>
+    @*@Html.Partial("_Create",  "Agendamento")*@
+</div>
+<div class="col-md-12 col-md-offset-1">
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Segunda</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Segunda-Feira"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Terça</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Terça-Feira"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Quarta</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Quarta-Feira"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Quinta</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Quinta-Feira"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Sexta</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Sexta-Feira"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-2 col-md-offset-4">
+        <h1 class="text-center"><small>Domingo</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Domingo"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center"><small>Sábado</small></h1>
+        <table class="table">
+            <tr>
+                <th class="text-center">
+                    Horário
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Where(a => a.DiaDaSemana == "Sábado"))
+            {
+                <tr class="text-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HoraDeExecucao)
+                        <a href="@Url.Action("Deletar", "Agendamentos", new { id= item.AgendamentoId })" class="btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

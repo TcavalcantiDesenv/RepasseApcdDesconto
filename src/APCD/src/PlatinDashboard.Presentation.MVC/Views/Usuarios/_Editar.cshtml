@@ -1,0 +1,88 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers
+@model PlatinDashboard.Application.ViewModels.UserViewModels.EditUserViewModel
+<div class="card-body" id="form-content">
+    @using (Ajax.BeginForm("Editar", new { @controller = "Usuarios" },
+        new AjaxOptions
+        {
+            OnSuccess = "location.reload()",
+            OnFailure = "editUserFailed()"
+        },
+        new { @id = "edit-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.UserId)
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Usuário" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.LastName)
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Sobrenome do Usuário" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail do Usuário", disabled = "" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.UserName)
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Login do Usuário", disabled = "" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error invalid-feedback" })
+            </div>
+            @if (User.Identity.GetUserType() == "Manager")
+            {
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(model => model.UserType)
+                    <select id="UserType" name="UserType" class="form-control">
+                        <option value="Manager" @(Model.UserType == "Manager" ? "selected" : "")>Manager</option>
+                        <option value="Subadmin" @(Model.UserType == "Subadmin" ? "selected" : "")>Subadmin</option>
+                        <option value="Comum" @(Model.UserType == "Comum" ? "selected" : "")>Comum</option>
+                    </select>
+                </div>
+            }
+            else if (User.Identity.GetUserType() == "Subadmin")
+            {
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(model => model.UserType)
+                    <select id="UserType" name="UserType" class="form-control">
+                        <option value="Comum">Comum</option>
+                    </select>
+                </div>
+            }
+            else
+            {
+                <div class="form-group col-sm-4">
+                    @Html.LabelFor(model => model.UserType)
+                    <select id="UserType" name="UserType" class="form-control" disabled>
+                        <option value="Subadmin" selected>Admin</option>
+                    </select>
+                </div>
+            }
+            <div class="col-sm-2">
+                @Html.LabelFor(model => model.Active)
+                <div>
+                    <label class="switch switch-label switch-pill switch-success">
+                        <input type="checkbox" class="switch-input" name="Active" id="Active" checked="@Model.Active" value="true">
+                        <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                    </label>
+                    <input name="Active" type="hidden" value="false">
+                </div>
+            </div>
+        </div>
+        if (User.Identity.GetUserType() != "Admin")
+        {
+            <div class="form-group" id="StoreAccess">
+                <label for="Email">Limitar acesso às lojas (Deixe vazio caso não queira limitar o acesso)</label>
+                @*@Html.ListBoxFor(model => model.UserStoresIds, (IEnumerable<SelectListItem>)ViewBag.Lojas, new { @class = "form-control select2-element", multiple = "multiple" })*@
+            </div>
+        }
+        <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-out" id="edit-btn" onclick="submitForm(this, 'edit-form')">
+            <span class="ladda-label">Alterar</span>
+        </button>
+    }
+</div>

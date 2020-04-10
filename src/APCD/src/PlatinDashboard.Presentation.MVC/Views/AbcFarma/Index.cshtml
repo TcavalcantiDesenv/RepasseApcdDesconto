@@ -1,0 +1,132 @@
+﻿@using PagedList.Mvc;
+@model PagedList.PagedList<PlatinDashboard.Presentation.MVC.ApiServices.ProdutosAbcFarma>
+
+@{
+    ViewBag.Title = "Produtos";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Arquivo AbcFarma</a>
+        </li>
+        <li class="breadcrumb-item active">Produtos AbcFarma</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="row" id="row-busca">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Index", "AbcFarma", FormMethod.Get, new { @class = "form-inline", id = "formBusca" }))
+        {
+            <div class="form-group">
+                <select name="tamanhoPagina" id="tamanhoPagina" class="form-control" onchange="this.form.submit()">
+                    <option value="10" @(ViewBag.TamanhoPagina == 10 ? "selected" : "")>Listar 10 registros por pagina</option>
+                    <option value="20" @(ViewBag.TamanhoPagina == 20 ? "selected" : "")>Listar 20 registros por pagina</option>
+                    <option value="30" @(ViewBag.TamanhoPagina == 30 ? "selected" : "")>Listar 30 registros por pagina</option>
+                </select>
+            </div>
+            <div class="input-group pull-right">
+                <input type="text" class="form-control" placeholder="Buscar produto..." name="busca" value="@ViewBag.Busca">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Buscar</button>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="bg-primary">
+                    <th>Nome</th>
+                    <th>Ean</th>
+                    <th>Descrição</th>
+                    <th>Composição</th>
+                    <th>PF_20</th>
+                    <th>Data Vigencia</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NOME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EAN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DESCRICAO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.COMPOSICAO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PF_20)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DATA_VIGENCIA)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DESCRICAO_TIPO_PRODUTO)
+                    </td>
+                    @*<td><a class="btn btn-info" href="~/ProductDescription/Update/@item.EAN"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td>
+                            <a href="@Url.Action("SincronizarPorEan", "Execucoes", new { ean = @item.EAN })" class="btn btn-danger">Sincronizar</a>
+                        </td>*@
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, busca = ViewBag.Busca, tamanhoPagina = ViewBag.TamanhoPagina }))
+    </div>
+    <div class="col-md-6">
+        <span class="pull-right">
+            Listando registros de @Model.FirstItemOnPage a @Model.LastItemOnPage de um total de @Model.TotalItemCount
+        </span>
+    </div>
+</div>
+
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+

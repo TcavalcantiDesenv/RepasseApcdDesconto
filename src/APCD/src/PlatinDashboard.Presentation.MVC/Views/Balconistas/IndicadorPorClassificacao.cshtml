@@ -1,0 +1,318 @@
+﻿@{
+    ViewBag.Title = "Indicador por Classificação | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <style>
+        .col-md-7, .col-md-5, .col-md-4 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .col-form-label {
+            font-size: 17px;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Indicador por Classificação</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="animated fadeIn">
+    <row class="row">
+        <div class="card col-md-12">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12 d-md-block">
+                        <button type="button" class="btn btn-primary float-right d-md-block ladda-button" id="vendas-mensal-btn" onclick="carregarGraficos(this)">
+                            <i class="icon-magnifier"></i> Buscar
+                        </button>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Loja</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                @Html.DropDownList("loja", (IEnumerable<SelectListItem>)ViewBag.Stores, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Balconista</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                <select class="form-control" id="balconista"></select>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Ano</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                @Html.DropDownList("ano", (IEnumerable<SelectListItem>)ViewBag.Years, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-5" style="display: inline-block">
+                            <h1 class="col-md-4 col-form-label" for="select1" style="display: inline-block">Mês</h1>
+                            <div class="col-md-7" style="display: inline-block">
+                                @Html.DropDownList("mes", (IEnumerable<SelectListItem>)ViewBag.Months, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.col-->
+                </div>
+                <!--/.row-->
+            </div>
+        </div>
+    </row>
+    <div class="row">
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Todas Classificações - Vendas Diária
+                </div>
+                <div class="card-body">
+                    <label id="totalClassificacoesDiaria-legenda"></label>
+                    <canvas id="totalClassificacoesDiaria-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    Todas Classificações - Vendas Mensal
+                </div>
+                <div class="card-body">
+                    <label id="totalClassificacoesMensal-legenda"></label>
+                    <canvas id="totalClassificacoesMensal-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao1">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao1Diario-legenda"></label>
+                    <canvas id="Classificacao1Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao1Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao1-legenda"></label>
+                    <canvas id="Classificacao1-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao2">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao2Diario-legenda"></label>
+                    <canvas id="Classificacao2Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao2Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao2-legenda"></label>
+                    <canvas id="Classificacao2-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao3">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao3Diario-legenda"></label>
+                    <canvas id="Classificacao3Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao3Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao3-legenda"></label>
+                    <canvas id="Classificacao3-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao4">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao4Diario-legenda"></label>
+                    <canvas id="Classificacao4Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao4Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao4-legenda"></label>
+                    <canvas id="Classificacao4-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao5">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao5Diario-legenda"></label>
+                    <canvas id="Classificacao5Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao5Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao5-legenda"></label>
+                    <canvas id="Classificacao5-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao6">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao6Diario-legenda"></label>
+                    <canvas id="Classificacao6Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao6Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao6-legenda"></label>
+                    <canvas id="Classificacao6-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao7">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao7Diario-legenda"></label>
+                    <canvas id="Classificacao7Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao7Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao7-legenda"></label>
+                    <canvas id="Classificacao7-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-7" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao8">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao8Diario-legenda"></label>
+                    <canvas id="Classificacao8Diario-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-5" style="display: inline-block;">
+            <div class="card">
+                <div class="card-header">
+                    <span id="spanClassificacao8Mensal">Classificacao</span>
+                </div>
+                <div class="card-body">
+                    <label id="Classificacao8-legenda"></label>
+                    <canvas id="Classificacao8-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="MesAtual" hidden="hidden" name="MesAtual" value="@DateTime.Now.Month + 1" />
+<input id="AnoAtual" hidden="hidden" name="AnoAtual" value="@DateTime.Now.Year" />
+@section scripts{
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/chartsjs/indicadorporclassificacaobalconista.v1.0.1.js"></script>
+    <script src="~/ContentLegado/Dashboard/js/highcharts.js"></script>
+    <script src="~/ContentLegado/Dashboard/js/highcharts-more.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            CarregarDadosBalconistas();
+            setTimeout(function () {
+                TotalClassificacoesDiario();
+                TotalClassificacoesMensal();
+                Classificacao1Mensal();
+                Classificacao2Mensal();
+                Classificacao3Mensal();
+                Classificacao4Mensal();
+                Classificacao5Mensal();
+                Classificacao6Mensal();
+                Classificacao7Mensal();
+                Classificacao8Mensal();
+                Classificacao1Diario();
+                Classificacao2Diario();
+                Classificacao3Diario();
+                Classificacao4Diario();
+                Classificacao5Diario();
+                Classificacao6Diario();
+                Classificacao7Diario();
+                Classificacao8Diario();
+            }, 3000);
+        });
+
+        $('#loja').on('change', function () {
+            $('#balconista').empty();
+            CarregarDadosBalconistas();
+        });
+    </script>
+}

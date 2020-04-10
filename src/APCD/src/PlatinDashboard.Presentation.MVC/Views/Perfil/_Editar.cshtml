@@ -1,0 +1,56 @@
+﻿@model PlatinDashboard.Application.ViewModels.UserViewModels.ProfileUserViewModel
+<div class="card-body" id="form-content">
+    @using (Ajax.BeginForm("Editar", new { @controller = "Perfil" },
+        new AjaxOptions { OnSuccess = "editUserCallBack",
+                          OnFailure = "editUserFailed()"},
+                          new { @id = "edit-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.UserId)
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome da regional" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.LastName)
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "codigo" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail do Usuário", disabled = "" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.UserName)
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Login do Usuário", disabled = "" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-4">
+                @Html.LabelFor(model => model.UserType)
+                <select id="UserType" name="UserType" class="form-control" disabled>
+                    <option value="Subadmin" @(Model.UserType == "SubAdmin" ? "selected" : "")>Subadmin</option>
+                    <option value="Comum" @(Model.UserType == "Comum" ? "selected" : "")>Comum</option>
+                    <option value="Admin" @(Model.UserType == "Admin" ? "selected" : "")>Admin</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                @Html.LabelFor(model => model.Active)
+                <div>
+                    <label class="switch switch-label switch-pill switch-success">
+                        <input type="checkbox" class="switch-input" name="Active" id="Active" checked="@Model.Active" value="true" disabled>
+                        <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                    </label>
+                    <input name="Active" type="hidden" value="false">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-out" id="edit-btn" onclick="submitForm(this, 'edit-form')">
+            <span class="ladda-label">Alterar</span>
+        </button>
+    }
+</div>

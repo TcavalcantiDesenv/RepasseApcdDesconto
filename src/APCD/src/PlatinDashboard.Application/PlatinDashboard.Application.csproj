@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09B2C989-5746-4EDE-9243-06DD6657396F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlatinDashboard.Application</RootNamespace>
+    <AssemblyName>PlatinDashboard.Application</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppServices\CompanyAppService.cs" />
+    <Compile Include="AppServices\StoreAppService.cs" />
+    <Compile Include="AppServices\UserAppService.cs" />
+    <Compile Include="AppServices\VideoAppService.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="AutoMapper\ViewModelToDomainMappingProfile.cs" />
+    <Compile Include="AutoMapper\ViewModelToViewModelMappingProfile.cs" />
+    <Compile Include="Interfaces\IAppointmentAppService.cs" />
+    <Compile Include="Interfaces\ICompanyAppService.cs" />
+    <Compile Include="Interfaces\IStoreAppService.cs" />
+    <Compile Include="Interfaces\IUserAppService.cs" />
+    <Compile Include="Interfaces\IVideoAppService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ChartViewModels\EditChartViewModel.cs" />
+    <Compile Include="ViewModels\ChartViewModels\ChartViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModels\AppointmentViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModels\CompanyChartViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModels\CreateCompanyViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\MidiaViewModels\VideoViewModel.cs" />
+    <Compile Include="ViewModels\StoreViewModels\StoreViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\ProfileUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserChartViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserStoreViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModels\UserViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PlatinDashboard.Application.Administrativo\PlatinDashboard.Application.Administrativo.csproj">
+      <Project>{aaa5d456-c1b9-4240-9d12-f45e6f134f0b}</Project>
+      <Name>PlatinDashboard.Application.Administrativo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlatinDashboard.Application.Farmacia\PlatinDashboard.Application.Farmacia.csproj">
+      <Project>{BF91AD12-48FB-49B7-BA89-ED9308330B65}</Project>
+      <Name>PlatinDashboard.Application.Farmacia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlatinDashboard.Domain.Administrativo\PlatinDashboard.Domain.Administrativo.csproj">
+      <Project>{283C17D0-3DEB-4865-BEA0-D1D9A110E8E7}</Project>
+      <Name>PlatinDashboard.Domain.Administrativo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlatinDashboard.Domain\PlatinDashboard.Domain.csproj">
+      <Project>{7DE3D18C-3904-4EA3-B46F-70F8FA85B463}</Project>
+      <Name>PlatinDashboard.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

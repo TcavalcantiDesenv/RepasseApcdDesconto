@@ -1,0 +1,18 @@
+﻿<span class="label-default">@ViewBag.Cliente @ViewBag.LastName </span>
+<a class="nav-link" id="escolherCliente" href="javascript:void(0)" onclick="showChangeClientModal()">
+    Escolher Cliente
+</a>
+
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+}
+@section scripts{
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="@Url.Content("~/Scripts/viewsjs/changeclient.js")"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+        }
+    </script>
+}
+

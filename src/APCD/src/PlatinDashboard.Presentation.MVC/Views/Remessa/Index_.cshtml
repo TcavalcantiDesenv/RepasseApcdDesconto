@@ -1,0 +1,127 @@
+﻿@model  List<Model.Entity.RemessaWeb>
+@{
+    ViewBag.Title = "Index";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Remessas</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+
+
+
+
+
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+
+<div class="card">
+    <div class="card-header">
+        <table class="table table-striped">
+            <tr>
+                <td class="text-center">
+                    <a class="btn btn-warning">
+                        @ViewBag.NomeRegional: (@ViewBag.ValorTotal)
+                    </a>
+                </td>
+                <td class="text-center btn btn-success">
+                    Banco:@Html.DropDownList("bancos")
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-success " id="btnVisualizar">
+                        <i class="fa fa-search-plus ">Visualizar</i>
+                    </a>
+                </td>
+                <td class="text-warning">
+                    <a class="btn btn-success " id="btnGerarPDF">
+                        <i class="fa fa-search-plus ">GerarPDF</i>
+                    </a>
+                </td>
+                <td class="text-warning">
+                    <a class="btn btn-success " href="@Url.Action("Index", "Regional")">
+                        <i class="fa fa-search-plus ">Voltar</i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $("#btnVisualizar").click(function () {
+                    var url = "/Remessa/VisualizarBoleto/" + $("#bancos").val();
+                    abrirPopup(url);
+                });
+
+                $("#btnGerarPDF").click(function () {
+                    var url = "/Remessa/GerarBoletoPDF/" + $("#bancos").val();
+                    abrirPopup(url);
+                });
+
+                function abrirPopup(url) {
+                    window.open(url, "WindowPopup", 'width=700,height=800');
+                }
+            });</script>
+    </div>
+
+</div>
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+}
+
+
+

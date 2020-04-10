@@ -1,0 +1,95 @@
+﻿@using PlatinDashboard.Application.ViewModels.UserViewModels
+@model IEnumerable<UserViewModel>
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Usuários da @ViewBag.CompanyViewModel.Name</h4>
+        <a href="@Url.Action("Novo", "UsuariosEmpresa", new { id = @ViewBag.CompanyViewModel.CompanyId })" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Criar
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-md table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-people"></i>
+                    </th>
+                    <th>Usuário</th>
+                    <th class="text-center">E-mail</th>
+                    <th>Login</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Acesso</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr id="user-row-@user.UserId">
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>@user.Name[0].ToString().ToUpper()</span>
+                                </div>
+                                @if (user.Active)
+                                {
+                                    <span class="avatar-status badge-success"></span>
+                                }
+                                else
+                                {
+                                    <span class="avatar-status badge-danger"></span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div>@user.Name @user.LastName</div>
+                            <div class="small text-muted">
+                                Cadastro em: @user.CreatedAt.ToString("dd/MM/yyyy")
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            @user.Email
+                        </td>
+                        <td>
+                            @user.UserName
+                        </td>
+                        <td class="text-center">
+                            @if (user.Active)
+                            {
+                                <span class="badge badge-success">Ativo</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">Desativado</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (user.UserType == "Subadmin")
+                            {
+                                <span class="badge badge-success">@user.UserType</span>
+                            }
+                            else if (user.UserType == "Manager")
+                            {
+                                <span class="badge badge-dark">@user.UserType</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger">@user.UserType</span>
+                            }
+                        </td>
+                        <td class="text-right">
+                            <a class="btn btn-success" href="@Url.Action("Detalhes", "UsuariosEmpresa", new { id = user.UserId })">
+                                <i class="fa fa-search-plus "></i>
+                            </a>
+                            <a class="btn btn-danger" href="@Url.Action("ModalRemover", "UsuariosEmpresa", new { id = user.UserId })">
+
+                                @*<a class="btn btn-danger ladda-button" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, '@user.UserId')">*@
+                                <i class="fa fa-trash-o "></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

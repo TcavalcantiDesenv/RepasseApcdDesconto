@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_A1938F_CavaleirosModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Macon">
+          <Key>
+            <PropertyRef Name="Id_Macon" />
+          </Key>
+          <Property Name="Cim" Type="int" />
+          <Property Name="Id_Loja" Type="int" />
+          <Property Name="Id_Graduacao" Type="int" />
+          <Property Name="Id_Cargo" Type="int" />
+          <Property Name="Id_Condecoracao" Type="int" />
+          <Property Name="Nome" Type="varchar(max)" />
+          <Property Name="Nome_Tratamento" Type="varchar" MaxLength="150" />
+          <Property Name="Grau" Type="varchar" MaxLength="50" />
+          <Property Name="Senha" Type="varchar" MaxLength="10" />
+          <Property Name="Situacao" Type="varchar" MaxLength="100" />
+          <Property Name="CPF" Type="varchar" MaxLength="50" />
+          <Property Name="Login" Type="varchar" MaxLength="150" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="Email_Outros" Type="varchar" MaxLength="150" />
+          <Property Name="Dt_Nascimento" Type="varchar" MaxLength="10" />
+          <Property Name="Naturalidade" Type="varchar" MaxLength="10" />
+          <Property Name="Uf" Type="varchar" MaxLength="100" />
+          <Property Name="Nacionalidade" Type="varchar" MaxLength="100" />
+          <Property Name="Religiao" Type="varchar" MaxLength="100" />
+          <Property Name="Escolaridade" Type="varchar" MaxLength="500" />
+          <Property Name="Sexo" Type="varchar" MaxLength="100" />
+          <Property Name="Tipo_Sanguíneo" Type="varchar" MaxLength="100" />
+          <Property Name="Estado_Civil" Type="varchar" MaxLength="100" />
+          <Property Name="Data_Casamento" Type="date" />
+          <Property Name="Tipo_Di" Type="varchar" MaxLength="50" />
+          <Property Name="Num_Di" Type="varchar" MaxLength="50" />
+          <Property Name="Emissor_Di" Type="varchar" MaxLength="10" />
+          <Property Name="Dt_Emissao_Di" Type="varchar" MaxLength="20" />
+          <Property Name="Uf_Di" Type="varchar" MaxLength="10" />
+          <Property Name="Tit_Eleitor" Type="varchar" MaxLength="500" />
+          <Property Name="Zona_Eleitoral" Type="varchar" MaxLength="100" />
+          <Property Name="Secao_Eleitoral" Type="varchar" MaxLength="100" />
+          <Property Name="Nome_Pai" Type="varchar" MaxLength="500" />
+          <Property Name="Nome_Mae" Type="varchar" MaxLength="500" />
+          <Property Name="End_Res" Type="varchar" MaxLength="500" />
+          <Property Name="Bairro_Res" Type="varchar" MaxLength="500" />
+          <Property Name="Cidade_Res" Type="varchar" MaxLength="500" />
+          <Property Name="Uf_Res" Type="varchar" MaxLength="10" />
+          <Property Name="Cep_Res" Type="varchar" MaxLength="50" />
+          <Property Name="cx_postal" Type="varchar" MaxLength="50" />
+          <Property Name="celular" Type="varchar" MaxLength="50" />
+          <Property Name="tel_res" Type="varchar" MaxLength="50" />
+          <Property Name="fax" Type="varchar" MaxLength="50" />
+          <Property Name="obs" Type="varchar(max)" />
+          <Property Name="correspondencia_end" Type="varchar" MaxLength="500" />
+          <Property Name="foto" Type="image" />
+          <Property Name="Id_Macon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dt_Iniciado" Type="datetime" />
+          <Property Name="Guide" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="DB_A1938F_CavaleirosModel1StoreContainer">
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Macon" EntityType="Self.Macon" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_A1938F_CavaleirosModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Appointment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="DB_A1938F_CavaleirosEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appointment" EntityType="Self.Appointment" />
+          <EntitySet Name="Macon" EntityType="DB_A1938F_CavaleirosModel1.Macon" />
+        </EntityContainer>
+        <EntityType Name="Macon">
+          <Key>
+            <PropertyRef Name="Id_Macon" />
+          </Key>
+          <Property Name="Cim" Type="Int32" />
+          <Property Name="Id_Loja" Type="Int32" />
+          <Property Name="Id_Graduacao" Type="Int32" />
+          <Property Name="Id_Cargo" Type="Int32" />
+          <Property Name="Id_Condecoracao" Type="Int32" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nome_Tratamento" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Grau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Senha" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Situacao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CPF" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Email_Outros" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Nascimento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Naturalidade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Uf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nacionalidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Religiao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Escolaridade" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_Sanguíneo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado_Civil" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Data_Casamento" Type="DateTime" Precision="0" />
+          <Property Name="Tipo_Di" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Num_Di" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Emissor_Di" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Emissao_Di" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Uf_Di" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Tit_Eleitor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Zona_Eleitoral" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Secao_Eleitoral" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nome_Pai" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Nome_Mae" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="End_Res" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro_Res" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cidade_Res" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Uf_Res" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cep_Res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cx_postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tel_res" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="obs" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="correspondencia_end" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id_Macon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dt_Iniciado" Type="DateTime" Precision="3" />
+          <Property Name="Guide" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_A1938F_CavaleirosModel1StoreContainer" CdmEntityContainer="DB_A1938F_CavaleirosEntities1">
+          <EntitySetMapping Name="Appointment">
+            <EntityTypeMapping TypeName="DB_A1938F_CavaleirosModel1.Appointment">
+              <MappingFragment StoreEntitySet="Appointment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Macon">
+            <EntityTypeMapping TypeName="DB_A1938F_CavaleirosModel1.Macon">
+              <MappingFragment StoreEntitySet="Macon">
+                <ScalarProperty Name="Guide" ColumnName="Guide" />
+                <ScalarProperty Name="Dt_Iniciado" ColumnName="Dt_Iniciado" />
+                <ScalarProperty Name="Id_Macon" ColumnName="Id_Macon" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="correspondencia_end" ColumnName="correspondencia_end" />
+                <ScalarProperty Name="obs" ColumnName="obs" />
+                <ScalarProperty Name="fax" ColumnName="fax" />
+                <ScalarProperty Name="tel_res" ColumnName="tel_res" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="cx_postal" ColumnName="cx_postal" />
+                <ScalarProperty Name="Cep_Res" ColumnName="Cep_Res" />
+                <ScalarProperty Name="Uf_Res" ColumnName="Uf_Res" />
+                <ScalarProperty Name="Cidade_Res" ColumnName="Cidade_Res" />
+                <ScalarProperty Name="Bairro_Res" ColumnName="Bairro_Res" />
+                <ScalarProperty Name="End_Res" ColumnName="End_Res" />
+                <ScalarProperty Name="Nome_Mae" ColumnName="Nome_Mae" />
+                <ScalarProperty Name="Nome_Pai" ColumnName="Nome_Pai" />
+                <ScalarProperty Name="Secao_Eleitoral" ColumnName="Secao_Eleitoral" />
+                <ScalarProperty Name="Zona_Eleitoral" ColumnName="Zona_Eleitoral" />
+                <ScalarProperty Name="Tit_Eleitor" ColumnName="Tit_Eleitor" />
+                <ScalarProperty Name="Uf_Di" ColumnName="Uf_Di" />
+                <ScalarProperty Name="Dt_Emissao_Di" ColumnName="Dt_Emissao_Di" />
+                <ScalarProperty Name="Emissor_Di" ColumnName="Emissor_Di" />
+                <ScalarProperty Name="Num_Di" ColumnName="Num_Di" />
+                <ScalarProperty Name="Tipo_Di" ColumnName="Tipo_Di" />
+                <ScalarProperty Name="Data_Casamento" ColumnName="Data_Casamento" />
+                <ScalarProperty Name="Estado_Civil" ColumnName="Estado_Civil" />
+                <ScalarProperty Name="Tipo_Sanguíneo" ColumnName="Tipo_Sanguíneo" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Escolaridade" ColumnName="Escolaridade" />
+                <ScalarProperty Name="Religiao" ColumnName="Religiao" />
+                <ScalarProperty Name="Nacionalidade" ColumnName="Nacionalidade" />
+                <ScalarProperty Name="Uf" ColumnName="Uf" />
+                <ScalarProperty Name="Naturalidade" ColumnName="Naturalidade" />
+                <ScalarProperty Name="Dt_Nascimento" ColumnName="Dt_Nascimento" />
+                <ScalarProperty Name="Email_Outros" ColumnName="Email_Outros" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="CPF" ColumnName="CPF" />
+                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Grau" ColumnName="Grau" />
+                <ScalarProperty Name="Nome_Tratamento" ColumnName="Nome_Tratamento" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id_Condecoracao" ColumnName="Id_Condecoracao" />
+                <ScalarProperty Name="Id_Cargo" ColumnName="Id_Cargo" />
+                <ScalarProperty Name="Id_Graduacao" ColumnName="Id_Graduacao" />
+                <ScalarProperty Name="Id_Loja" ColumnName="Id_Loja" />
+                <ScalarProperty Name="Cim" ColumnName="Cim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

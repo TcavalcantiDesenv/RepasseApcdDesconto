@@ -1,0 +1,101 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<DashboardDrogaNossaSync.Entities.ProdutoSincronizado>
+@{
+    ViewBag.Title = "Detalhes da Execução #";
+}
+@section styles{
+    <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/compiled/elements.css" rel="stylesheet" />
+}
+<div class="row" style="opacity: 1; transform: translateY(0px);">
+    <div class="col-lg-12">
+        <h1>
+            Resultado da busca <small>@ViewBag.Busca</small>
+            <a href="#" onclick="window.history.back()" class="btn btn-primary pull-right">
+                <i class="fa fa-plus-circle fa-lg"></i> Voltar
+            </a>
+            <div class="filter-block pull-right" style="padding: 0 5px">
+                @using (Html.BeginForm("ProdutosSincronizados", "Execucoes", FormMethod.Get))
+                {
+                    <div class="form-group pull-left">
+                        @Html.Hidden("pagina", 1)
+                        <input type="text" class="form-control" name="busca" value="@ViewBag.Busca" placeholder="Buscar Nome, EAN">
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+                    <button class="btn btn-primary pull-right">
+                        Buscar
+                    </button>
+                }
+            </div>
+        </h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"><span>Identificador</span></th>
+                                    <th class="text-center"><span>Nome</span></th>
+                                    <th class="text-center"><span>Ean</span></th>
+                                    <th class="text-center"><span>Status</span></th>
+                                    <th class="text-center"><span>Preço Por</span></th>
+                                    <th class="text-center"><span>Quantidade</span></th>
+                                    <th class="text-center"><span>Operação</span></th>
+                                    <th class="text-center"><span>Sincronização</span></th>
+                                    <th class="text-center"><span>Data Sincronização</span></th>
+                                    <th class="text-center"><span>Ações</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var produto in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Detalhes", "ProdutosSincronizados", new { id=produto.ProdutoSincronizadoId })">#@produto.ProdutoSincronizadoId</a>
+                                        </td>
+                                        <td class="text-center">
+                                            @produto.Nome
+                                        </td>
+                                        <td class="text-center">
+                                            @produto.Ean
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-large label-@(produto.Status == "Sincronizado com sucesso"  ? "success" : "danger")">@produto.Status</span>
+                                        </td>
+                                        <td class="text-center">
+                                            R$ @produto.PrecoPor
+                                        </td>
+                                        <td class="text-center">
+                                            @produto.Quantidade
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-large label-@(produto.Operacao == "Adicionar"  ? "default" : "primary")">@produto.Operacao</span>
+                                        </td>
+                                        <td class="text-center">
+                                            #@produto.ExecucaoId
+                                        </td>
+                                        <td class="text-center">
+                                            @produto.DataSincronizacao
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Detalhes", "ProdutosSincronizados", new { id=produto.ProdutoSincronizadoId })" class="btn btn-success">Detalhes</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+                    <div style="float: right">
+                        @Html.PagedListPager(Model, pagina => Url.Action("ProdutosSincronizados", new { pagina, busca = ViewBag.Busca }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Voltar", "Index")
+</p>
+

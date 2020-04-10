@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF91AD12-48FB-49B7-BA89-ED9308330B65}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlatinDashboard.Application.Farmacia</RootNamespace>
+    <AssemblyName>PlatinDashboard.Application.Farmacia</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppServices\ClsCabAppService.cs" />
+    <Compile Include="AppServices\FunCabAppService.cs" />
+    <Compile Include="AppServices\ClsVenAllAppService.cs" />
+    <Compile Include="AppServices\GraficoWebAppService.cs" />
+    <Compile Include="AppServices\UadCabAppService.cs" />
+    <Compile Include="AppServices\VendaBalconistaPorHoraAppService.cs" />
+    <Compile Include="AppServices\VendaLojaPorHoraAppService.cs" />
+    <Compile Include="AppServices\VendaLojaPorMesAppService.cs" />
+    <Compile Include="AppServices\VendasLojaPorDiaHoraAppService.cs" />
+    <Compile Include="AppServices\VenUadAppService.cs" />
+    <Compile Include="AppServices\ViewBalconistaAppService.cs" />
+    <Compile Include="AutoMapper\FarmaciaDomainToViewModelMappingProfile.cs" />
+    <Compile Include="AutoMapper\FarmaciaViewModelToDomainMappingProfile.cs" />
+    <Compile Include="Interfaces\IClsCabAppService.cs" />
+    <Compile Include="Interfaces\IClsVenAllAppService.cs" />
+    <Compile Include="Interfaces\IFunCabAppService.cs" />
+    <Compile Include="Interfaces\IGraficoWebAppService.cs" />
+    <Compile Include="Interfaces\IUadCabAppService.cs" />
+    <Compile Include="Interfaces\IVendaBalconistaPorHoraAppService.cs" />
+    <Compile Include="Interfaces\IVendaLojaPorHoraAppService.cs" />
+    <Compile Include="Interfaces\IVendaLojaPorMesAppService.cs" />
+    <Compile Include="Interfaces\IVendasLojaPorDiaHoraAppService.cs" />
+    <Compile Include="Interfaces\IVenUadAppService.cs" />
+    <Compile Include="Interfaces\IViewBalconistaAppService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Balconista\BalconistaRankingViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\FunCabViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\HoraVendaViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\VendaBalconistaPorHoraViewModel.cs" />
+    <Compile Include="ViewModels\Classificacao\ClassificacaoVendaViewModel.cs" />
+    <Compile Include="ViewModels\Classificacao\ClsCabViewModel.cs" />
+    <Compile Include="ViewModels\Classificacao\ClsVenAllViewModel.cs" />
+    <Compile Include="ViewModels\Legado\SomaClassificacaoMesAno.cs" />
+    <Compile Include="ViewModels\Legado\TicketMedio.cs" />
+    <Compile Include="ViewModels\Loja\GraficoWebViewModel.cs" />
+    <Compile Include="ViewModels\Loja\LojaRankingViewModel.cs" />
+    <Compile Include="ViewModels\Loja\UadCabViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\BalconistaVendaViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\BalconistaViewModel.cs" />
+    <Compile Include="ViewModels\Balconista\ViewBalconistaViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VendaLojaPorHoraViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VendaLojaPorMesViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VendaLojaViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VendasLojaPorDiaHoraViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VenUadGridViewModel.cs" />
+    <Compile Include="ViewModels\Loja\VenUadViewModel.cs" />
+    <Compile Include="ViewModels\UploadFileResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlatinDashboard.Domain.Farmacia\PlatinDashboard.Domain.Farmacia.csproj">
+      <Project>{DC44E149-22CD-4E99-AD8B-76244910652E}</Project>
+      <Name>PlatinDashboard.Domain.Farmacia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

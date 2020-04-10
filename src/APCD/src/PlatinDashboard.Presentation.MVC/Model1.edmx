@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="APCDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Repasses">
+          <Key>
+            <PropertyRef Name="indice" />
+          </Key>
+          <Property Name="indice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Matricula" Type="varchar" MaxLength="255" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" />
+          <Property Name="Categoria" Type="varchar" MaxLength="255" />
+          <Property Name="Vencimento" Type="varchar" MaxLength="255" />
+          <Property Name="Valor" Type="varchar" MaxLength="255" />
+          <Property Name="LCM" Type="varchar" MaxLength="255" />
+          <Property Name="Codigo" Type="varchar" MaxLength="255" />
+          <Property Name="sequencia" Type="varchar" MaxLength="255" />
+          <Property Name="Documento" Type="varchar" MaxLength="255" />
+          <Property Name="ValorRepasse" Type="varchar" MaxLength="255" />
+          <Property Name="Pago" Type="bit" />
+          <Property Name="CodRegional" Type="varchar" MaxLength="255" />
+          <Property Name="NomeRegional" Type="varchar" MaxLength="255" />
+          <Property Name="PN" Type="varchar" MaxLength="255" />
+          <Property Name="MesAno" Type="varchar" MaxLength="255" />
+          <Property Name="Ativo" Type="varchar" MaxLength="255" />
+          <Property Name="Conta" Type="varchar" MaxLength="255" />
+          <Property Name="Empresa" Type="varchar" MaxLength="255" />
+          <Property Name="DataPagto" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="APCDModelStoreContainer">
+          <EntitySet Name="Repasses" EntityType="Self.Repasses" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="APCDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Repasses">
+          <Key>
+            <PropertyRef Name="indice" />
+          </Key>
+          <Property Name="indice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Matricula" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Categoria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Vencimento" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Valor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LCM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sequencia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Documento" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ValorRepasse" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Pago" Type="Boolean" />
+          <Property Name="CodRegional" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NomeRegional" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MesAno" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Conta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Empresa" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DataPagto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="RemessaDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Repasses" EntityType="Self.Repasses" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="APCDModelStoreContainer" CdmEntityContainer="RemessaDbEntities">
+          <EntitySetMapping Name="Repasses">
+            <EntityTypeMapping TypeName="APCDModel.Repasses">
+              <MappingFragment StoreEntitySet="Repasses">
+                <ScalarProperty Name="indice" ColumnName="indice" />
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Vencimento" ColumnName="Vencimento" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="LCM" ColumnName="LCM" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="sequencia" ColumnName="sequencia" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="ValorRepasse" ColumnName="ValorRepasse" />
+                <ScalarProperty Name="Pago" ColumnName="Pago" />
+                <ScalarProperty Name="CodRegional" ColumnName="CodRegional" />
+                <ScalarProperty Name="NomeRegional" ColumnName="NomeRegional" />
+                <ScalarProperty Name="PN" ColumnName="PN" />
+                <ScalarProperty Name="MesAno" ColumnName="MesAno" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Conta" ColumnName="Conta" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="DataPagto" ColumnName="DataPagto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

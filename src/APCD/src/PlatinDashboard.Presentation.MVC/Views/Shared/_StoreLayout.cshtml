@@ -1,0 +1,28 @@
+﻿
+@{
+    //ViewBag.Title ??  "Quero Trocar - Não compre, troque!";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/StoreContent/bootstrap/css")
+    @Styles.Render("~/StoreContent/skin-1/css")
+    @Styles.Render("~/StoreContent/style/css")
+    @Styles.Render("~/StoreContent/home-v7/css")
+    @RenderSection("styles", required: false)
+    @RenderSection("internalstyles", required: false)
+    <!--[if lt IE 9]>
+        <script src="@Url.Content("~/Content/StoreContent/js/html5shiv.js")"></script>
+        <script src="@Url.Content("~/Content/StoreContent/js/respond.min.js")"></script>
+    <![endif]-->
+    <script>paceOptions = {
+            elements: true
+        };</script>
+    @Scripts.Render("~/StoreContent/pace/script")
+    <meta name="description" content="Sistema de Trocas" />
+</head>
+
+</html>

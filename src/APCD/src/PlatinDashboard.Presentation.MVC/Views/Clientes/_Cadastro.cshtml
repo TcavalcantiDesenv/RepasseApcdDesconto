@@ -1,0 +1,85 @@
+﻿@model Model.Entity.Clientes
+<div class="card-body" id="form-content">
+    @using (Ajax.BeginForm("Editar", new { @controller = "Clientes" },
+        new AjaxOptions
+        {
+            OnSuccess = "editCompanyCallBack",
+            OnFailure = "editCompanyFailed()"
+        },
+                          new { @id = "edit-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.RazaoSocial)
+            @Html.EditorFor(model => model.RazaoSocial, new { htmlAttributes = new { @class = "form-control", placeholder = "Razão Social" } })
+            @Html.ValidationMessageFor(model => model.RazaoSocial, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NomeFantasia)
+            @Html.EditorFor(model => model.NomeFantasia, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome Fantasia" } })
+            @Html.ValidationMessageFor(model => model.NomeFantasia, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.N_Cliente)
+                @Html.EditorFor(model => model.N_Cliente, new { htmlAttributes = new { @class = "form-control", placeholder = "Codigo Cliente" } })
+                @Html.ValidationMessageFor(model => model.N_Cliente, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.CNPJ)
+                @Html.EditorFor(model => model.CNPJ, new { htmlAttributes = new { @class = "form-control", placeholder = "CNPJ" } })
+                @Html.ValidationMessageFor(model => model.CNPJ, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.IE)
+                @Html.EditorFor(model => model.IE, new { htmlAttributes = new { @class = "form-control", placeholder = "Inscrição Estadual" } })
+                @Html.ValidationMessageFor(model => model.IE, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.HomePage)
+                @Html.EditorFor(model => model.HomePage, new { htmlAttributes = new { @class = "form-control", placeholder = "Home Page" } })
+                @Html.ValidationMessageFor(model => model.HomePage, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Cidade)
+                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control", placeholder = "Cidade" } })
+                @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Estado)
+                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control", placeholder = "Estado" } })
+                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Bairro)
+                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control", placeholder = "Bairro" } })
+                @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.CEP)
+                @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control", placeholder = "CEP" } })
+                @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Fone1)
+                @Html.EditorFor(model => model.Fone1, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefone" } })
+                @Html.ValidationMessageFor(model => model.Fone1, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Fone2)
+                @Html.EditorFor(model => model.Fone2, new { htmlAttributes = new { @class = "form-control", placeholder = "Celular" } })
+                @Html.ValidationMessageFor(model => model.Fone2, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success ladda-button" data-style="zoom-out" id="edit-btn" onclick="submitForm(this, 'edit-form')">
+            <span class="ladda-label">Atualizar</span>
+        </button>
+    }
+</div>

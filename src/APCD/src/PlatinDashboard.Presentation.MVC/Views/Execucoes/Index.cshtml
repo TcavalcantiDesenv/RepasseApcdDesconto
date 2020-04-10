@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row" style="opacity: 1; transform: translateY(0px);">
+    <div class="col-lg-12">
+        <div class="row">
+            <h1>
+                Sincronizações Droga Economais<small>Últimas Execuções</small>
+                @if (ViewBag.UltimaExecucao != null && ViewBag.UltimaExecucao.Status != "Iniciada")
+                {
+                    <a href="@Url.Action("ConfirmarSincronizacao", "Execucoes")" class="btn btn-danger" style="float: right">Sincronizar Agora</a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="btn btn-danger disabled" style="float: right">Sincronizar Agora</a>
+                }
+                <div class="filter-block pull-right" style="padding: 0 5px">
+                    @using (Html.BeginForm("ProdutosSincronizados", "Execucoes", FormMethod.Get))
+                    {
+                        <div class="form-group pull-left">
+                            @Html.Hidden("pagina", 1)
+                            <input type="text" class="form-control" name="busca" value="@ViewBag.Busca" placeholder="Buscar Nome, EAN">
+                            <i class="fa fa-search search-icon"></i>
+                        </div>
+                        <button class="btn btn-primary pull-right">
+                            Buscar
+                        </button>
+                    }
+                </div>
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"><span>Identificador</span></th>
+                                    <th class="text-center"><span>Status</span></th>
+                                    <th class="text-center"><span>Inicio da Execução</span></th>
+                                    <th class="text-center"><span>Fim da Execução</span></th>
+                                    <th class="text-center"><span>Ações</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var execucao in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Detalhes", "Execucoes", new { id=execucao.ExecucaoId })">#@execucao.ExecucaoId</a>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (execucao.Status == "Iniciada")
+                                            {
+                                                <span class="label label-large label-primary">@execucao.Status</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-large label-@(execucao.Status == "Finalizada"  ? "success" : "danger")">@execucao.Status</span>
+                                            }
+                                        </td>
+                                        <td class="text-center">
+                                            @execucao.Inicio
+                                        </td>
+                                        <td class="text-center">
+                                            @execucao.Fim
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="@Url.Action("Detalhes", "Execucoes", new { id=execucao.ExecucaoId })" class="btn btn-success">Detalhes</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+                    <div style="float: right">
+                        @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

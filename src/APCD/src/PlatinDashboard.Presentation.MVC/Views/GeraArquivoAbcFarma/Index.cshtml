@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PlatinDashboard.Presentation.MVC.ApiServices.ProdutosAbcFarma>
+@{
+    ViewBag.Title = "Usuários | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Arquivo AbcFarma</a>
+        </li>
+        <li class="breadcrumb-item active">Produtos AbcFarma</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Arquivo AbcFarma Gerado com Sucesso!</h4>
+        <a href="@Url.Action("Index", "AbcFarma")" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Visualizar Dados 
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            @*<thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-people"></i>
+                    </th>
+                    <th>NOME</th>
+                    <th class="text-center">DESCRIÇÂO</th>
+                    <th>DESCRIÇÂO</th>
+                    <th class="text-center">COMPOSIÇÃO</th>
+                    <th class="text-center">FABRICANTE</th>
+                    <th class="text-center">REFERENCIA</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>*@
+        </table>
+    </div>
+</div>
+@section modals{
+    <div id="modal-section"></div>
+}
+
+

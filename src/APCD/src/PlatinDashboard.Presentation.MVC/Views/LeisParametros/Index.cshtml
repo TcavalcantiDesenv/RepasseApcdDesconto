@@ -1,0 +1,250 @@
+﻿
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Leis e Parametros</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+
+@Html.Partial("GridViewMasterPartial", Model)
+
+@section modals{
+    <div id="modal-section">
+
+    </div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/companyindex.js"></script>
+    <script src="~/Scripts/viewsjs/changeclient.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadClientes();
+            initializeCompanyTable();
+        });
+    </script>
+
+    <script>
+        $(function () {
+
+
+            var orderUrl = '@Url.Action("getOrders", "LeisParametros")';
+
+            var table = $("#ordersTable").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": false,
+                "orderMulti": false,
+                "ajax": {
+                    "url": orderUrl,
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+
+                    { "data": "sistema", "name": "sistema", "autoWidth": true },
+                    { "data": "ambito", "name": "ambito", "autoWidth": true },
+                    { "data": "tema", "name": "tema", "autoWidth": true },
+                    { "data": null, "name": "Action", "defaultContent": '<a href="#" class="editItem">Edit Order</a>', "autoWidth": true }
+
+                ]
+            });
+
+        function getSingleOrderDetail(Id) {
+            return $.ajax({
+                type: 'GET',
+                url: '@Url.Action("getSingleOrderDetail", "LeisParametros", new { area = "" })',
+                data: "Id=" + Id
+            });
+            }
+
+            $(document).on("click", '.editItem', function (e) {
+                var data = table.row($(this).parents('tr')).data();
+                //console.log(data);
+                e.preventDefault();
+                var Id = data.Id;
+
+                $.when(getOrder(Id)).then(function (res) {
+                    var detArr = [];
+                    $("#sistema").val(res.result.Sistema);
+                    $("#ambito").val(res.result.Ambito);
+                    $("#Id").val(res.result.Id);
+
+                    $.each(res.result.OrderDetails, function (i, v) {
+                        detArr.push('<tr><td>' + v.Sistema + '</td><td>' + v.Ambito + '</td><td>' + v.Ambito + '</td><td>' + v.Ambito + '</td><td><a data-itemId="' + v.Id + '" href="#" class="deleteItem">Delete</a> | <a href="#" data-itemId="' + v.Id + '" class="editDetail">Edit</a></td></tr>')
+                    });
+                    $("#detailsTable tbody").append(detArr);
+                    $("#saveOrder").html("Save Update");
+                    $('#newOrderModal').modal('show');
+
+                }).fail(function (err) {
+                    console.log(err);
+                });
+            });
+
+
+
+        var saveUrl = '@Url.Action("saveOrder", "Home", new { area=""})';
+            $("#addNewItem").click(function (e) {
+                e.preventDefault();
+                $("#customerName").val('');
+                $("#address").val('');
+                $("#orderMasterId").val('');
+                $("#detailsTable tbody tr").remove();
+                $("#saveOrder").html("Save Order");
+                $('#newOrderModal').modal('show');
+            });
+
+            $("#addMore").click(function (e) {
+                e.preventDefault();
+                $('#orderDetailsModal').modal('show');
+            });
+
+            $("#addToList").click(function (e) {
+                e.preventDefault();
+
+                if ($.trim($("#productName").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") return;
+
+                var productName = $("#productName").val(),
+                    price = $("#price").val(),
+                    quantity = $("#quantity").val(),
+                    detailsTableBody = $("#detailsTable tbody");
+
+                var productItem = '<tr><td>' + productName + '</td><td>' + price + '</td><td>' + quantity + '</td><td>' + (parseFloat(price) * parseInt(quantity)) + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+                detailsTableBody.append(productItem);
+                clearItem();
+            });
+
+
+
+            function clearItem() {
+                $("#productName").val('');
+                $("#price").val('');
+                $("#quantity").val('');
+            }
+
+            function saveOrder(data) {
+                return $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: saveUrl,
+                    data: data
+                });
+            }
+
+
+            function getOrder(id) {
+                return $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("getSingleOrder", "Home", new { area = "" })',
+                    data: "orderId=" + id
+                });
+            }
+
+
+            function deleteOrderItem(id) {
+                return $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("deleteOrderItem", "Home", new { area = "" })',
+                    data: "id=" + id
+                });
+            }
+
+            $(document).on('click', 'a.deleteItem', function (e) {
+                e.preventDefault();
+                var $self = $(this);
+                if ($(this).attr('data-itemId') == "0") {
+                    $(this).parents('tr').css("background-color", "#FF3700").fadeOut(800, function () {
+                        $(this).remove();
+                    });
+                } else {
+                    $.when(deleteOrderItem($(this).attr('data-itemId'))).then(function (res) {
+                        $self.parents('tr').css("background-color", "#FF3700").fadeOut(800, function () {
+                            $(this).remove();
+                        });
+                    }).fail(function (err) {
+
+                    });
+                }
+            });
+
+
+
+
+            $("#saveOrder").click(function (e) {
+                e.preventDefault();
+
+                var orderArr = [];
+                orderArr.length = 0;
+
+                $.each($("#detailsTable tbody tr"), function () {
+                    orderArr.push({
+                        ProductName: $(this).find('td:eq(0)').html(),
+                        Quantity: $(this).find('td:eq(2)').html(),
+                        Amount: $(this).find('td:eq(1)').html()
+                    });
+                });
+
+                var data = JSON.stringify({
+                    CustomerName: $("#customerName").val(),
+                    Address: $("#address").val(),
+                    OrderDetails: orderArr
+                });
+
+                $.when(saveOrder(data)).then(function (response) {
+                    console.log(response);
+                }).fail(function (err) {
+                    console.log(err);
+                });
+            });
+
+
+            $(document).on("click", '.editDetail', function (e) {
+
+                e.preventDefault();
+                var id = $(this).attr("data-itemid");
+
+                $.when(getSingleOrderDetail(Id)).then(function (res) {
+                    var detArr = [],
+                        data = res.result;
+                    $("#Id").val(data.Id);
+                    $("#Sistema").val(data.Sistema);
+                    $("#Ambito").val(data.Ambito);
+                    $("#Capitulo").val(data.Capitulo);
+
+                    $('#orderDetailsModal').modal('show');
+
+                }).fail(function (err) {
+                    console.log(err);
+                });
+            });
+
+
+
+        });
+
+    </script>
+}
+
+
+

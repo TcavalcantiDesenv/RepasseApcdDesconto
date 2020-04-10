@@ -1,0 +1,53 @@
+﻿@model PlatinDashboard.Application.ViewModels.CompanyViewModels.CompanyViewModel
+<div class="card-body" id="form-content">
+    @using (Ajax.BeginForm("Editar", new { @controller = "Empresas" },
+        new AjaxOptions { OnSuccess = "editCompanyCallBack",
+                          OnFailure = "editCompanyFailed()" },
+                          new { @id = "edit-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.CompanyId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome da Empresa" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DatabaseServer)
+            @Html.EditorFor(model => model.DatabaseServer, new { htmlAttributes = new { @class = "form-control", placeholder = "Servidor de Banco de Dados" } })
+            @Html.ValidationMessageFor(model => model.DatabaseServer, "", new { @class = "error invalid-feedback" })
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.Database)
+                @Html.EditorFor(model => model.Database, new { htmlAttributes = new { @class = "form-control", placeholder = "Banco de Dados" } })
+                @Html.ValidationMessageFor(model => model.Database, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.DatabaseProvider)
+                @Html.DropDownListFor(model => model.DatabaseProvider, (IEnumerable<SelectListItem>)ViewBag.Providers, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DatabaseProvider, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-3">
+                @Html.LabelFor(model => model.DatabasePort)
+                @Html.EditorFor(model => model.DatabasePort, new { htmlAttributes = new { @class = "form-control", placeholder = "Porta do Banco de Dados" } })
+                @Html.ValidationMessageFor(model => model.DatabasePort, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.DatabaseUser)
+                @Html.EditorFor(model => model.DatabaseUser, new { htmlAttributes = new { @class = "form-control", placeholder = "Usuário do Banco de Dados" } })
+                @Html.ValidationMessageFor(model => model.DatabaseUser, "", new { @class = "error invalid-feedback" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(model => model.DatabasePassword)
+                @Html.EditorFor(model => model.DatabasePassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha do Banco de Dados" } })
+                @Html.ValidationMessageFor(model => model.DatabasePassword, "", new { @class = "error invalid-feedback" })
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-out" id="edit-btn" onclick="submitForm(this, 'edit-form')">            
+            <span class="ladda-label">Alterar</span>
+        </button>
+    }
+</div>

@@ -1,0 +1,63 @@
+﻿@model PlatinDashboard.Application.ViewModels.UserViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card-group">
+            <div class="card p-4">
+                <div class="card-body">
+                    <div class="col-md-12 text-center">
+                        <img src="~/img/brand/platin-logo.png" width="180" height="45" alt="Platin Logo" style="display: inline-block">
+                    </div>
+                    <br />
+                    @using (@Html.BeginForm("Index", "Acesso", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "login-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <p class="text-muted">Faça login em sua conta</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="icon-user"></i>
+                                </span>
+                            </div>
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Usuário" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="icon-lock"></i>
+                                </span>
+                            </div>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error invalid-feedback" })
+                            @Html.ValidationSummary(true, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary px-4 ladda-button" data-style="zoom-out" onclick="submitForm(this, 'login-form')">Acessar</button>
+                            </div>
+                            @*<div class="col-6 text-right">
+                                    <button type="button" class="btn btn-link px-0">Esqueceu a senha?</button>
+                                </div>*@
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+}
+
+
+

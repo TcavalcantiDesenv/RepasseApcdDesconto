@@ -1,0 +1,7 @@
+﻿@using PlatinDashboard.Presentation.MVC.Helpers;
+@using PlatinDashboard.Presentation.MVC.Models.Options;
+@{
+    PivotGridChartIntegrationDemoOptions options = (PivotGridChartIntegrationDemoOptions)Session["DemoOptions"];
+}
+
+@Html.DevExpress().PivotGrid(PivotGridCuboHelper.PivotChartIntegrationSettings(options)).Bind(Model).GetHtml()

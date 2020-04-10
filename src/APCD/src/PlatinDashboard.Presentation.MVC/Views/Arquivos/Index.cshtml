@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Usuários | Portal APCD";
+}
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Arquivo AbcFarma</a>
+        </li>
+        <li class="breadcrumb-item active">Produtos AbcFarma</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Arquivos AbcFarma</h4>
+        <a href="@Url.Action("Novo", "Usuarios")" class="btn btn-primary pull-right">
+            <i class="fa icon-plus"></i> Criar
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-target"></i>
+                    </th>
+                    <th>Nome do Arquivo</th>
+                    <th class="text-center">Descrição</th>
+                    <th>Observação</th>
+                    <th>Data</th>
+                    <th>Baixar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in ViewBag.ListaProdutos)
+                {
+                    <tr id="user-row-@user.IDARQUIVO">
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>@user.NOME[0].ToString().ToUpper()</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div> @user.NOME</div>
+                            <div class="small text-muted">
+                                Gerado em: @user.DATA.ToString("dd/MM/yyyy")
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            @user.DESCRICAO
+                        </td>
+                        <td>
+                            @user.OBSERVACAO
+                        </td>
+                        <td>
+                            @user.DATA.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Html.ActionLink("Download", "Download", new { id = user.CAMINHO })
+                        </td>
+                        @*
+                            <a class="btn btn-info glyphicon-download" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, '@user.IDARQUIVO')">
+                                <i class="fa fa-trash-o "></i>
+                            </a>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

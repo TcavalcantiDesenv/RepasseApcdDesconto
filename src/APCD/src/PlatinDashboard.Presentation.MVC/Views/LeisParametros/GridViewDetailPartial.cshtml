@@ -1,0 +1,22 @@
+﻿@Html.DevExpress().GridView(
+    settings => {
+        settings.Name = "detailGridView_" + ViewData["RoomID"];
+        settings.CallbackRouteValues = new { Controller = "LeisParametros", Action = "GridViewDetailPartial", RoomID = ViewData["RoomID"] };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Home", Action = "GridViewDetailAddNewPartial", RoomID = ViewData["RoomID"] };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Home", Action = "GridViewDetailUpdatePartial", RoomID = ViewData["RoomID"] };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Home", Action = "GridViewDetailDeletePartial", RoomID = ViewData["RoomID"] };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "IDLegisGeral";
+        settings.Columns.Add("Capitulo");
+        settings.Columns.Add("Item");
+        settings.Columns.Add("Parametro");
+
+        settings.DataBinding = (sender, e) => {
+            ((MVCxGridView)sender).ForceDataRowType(typeof(DevExpress.Razor.Models.Person));
+        };
+    }).Bind(Model).GetHtml()

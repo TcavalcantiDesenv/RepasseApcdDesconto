@@ -1,0 +1,184 @@
+﻿@model PlatinDashboard.Application.ViewModels.CompanyViewModels.CreateCompanyViewModel
+@{
+    ViewBag.Title = "Criar nova Empresa | Portal APCD";
+}
+@section Styles{
+    @Styles.Render("~/coreui/select2/css")
+    <style>
+        .select2-selection__rendered {
+            position: relative;
+            height: 23px;
+            top: 4px;
+        }
+        .select2-selection {
+            height: 35px !important;
+            border: 1px solid #e4e7ea !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow{
+            height: 31px;
+        }
+    </style>
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Empresas")">Regionais</a>
+        </li>
+        <li class="breadcrumb-item active">Nova Regional</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 style="display: inline-block">Cadastrar nova Loja</h4>
+                <a href="@Url.Action("Index", "Empresas")" class="btn btn-primary pull-right">Cancelar</a>
+            </div>
+            <div class="card-body">
+                <h5>Dados da Loja</h5>
+                @using (@Html.BeginForm("Nova", "Empresas", FormMethod.Post, new { id = "UserForm"}))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        
+                    </div>
+                    <div class="row">
+                        @*<div class="form-group col-sm-4 text-center">
+            <label for="Name">Importar Empresa do Sistema Administrativo?</label>
+            <div>
+                <label class="switch switch-label switch-pill switch-success">
+                    <input type="checkbox" class="switch-input" name="ImportedFromAdministrative" id="ImportedFromAdministrative" checked="@Model.ImportedFromAdministrative" value="true">
+                    <span class="switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                </label>
+                <input name="ImportedFromAdministrative" type="hidden" value="false">
+            </div>
+        </div>*@
+                        <div class="form-group col-sm-8">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.DropDownListFor(model => model.CustomerCode, (IEnumerable<SelectListItem>)ViewBag.RedeViewModels, new { @class = "form-control select2-element" })
+                            <div id="NameContent">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome da Loja" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error invalid-feedback" })
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            @Html.LabelFor(model => model.DatabaseProvider)
+                            @Html.DropDownListFor(model => model.DatabaseProvider, (IEnumerable<SelectListItem>)ViewBag.Providers, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DatabaseProvider, "", new { @class = "error invalid-feedback" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DatabaseServer)
+                        @Html.EditorFor(model => model.DatabaseServer, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Venerável" } })
+                        @Html.ValidationMessageFor(model => model.DatabaseServer, "", new { @class = "error invalid-feedback" })
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.Database)
+                            @Html.EditorFor(model => model.Database, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Peimeiro Vigilante" } })
+                            @Html.ValidationMessageFor(model => model.Database, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.DatabasePort)
+                            @Html.EditorFor(model => model.DatabasePort, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome do Segundo Vigilante" } })
+                            @Html.ValidationMessageFor(model => model.DatabasePort, "", new { @class = "error invalid-feedback" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.DatabaseUser)
+                            @Html.EditorFor(model => model.DatabaseUser, new { htmlAttributes = new { @class = "form-control", placeholder = "Cidade onde localiza a loja" } })
+                            @Html.ValidationMessageFor(model => model.DatabaseUser, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group col-sm-6">
+                            @Html.LabelFor(model => model.DatabasePassword)
+                            @Html.EditorFor(model => model.DatabasePassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Estado onde se localiza a loja" } })
+                            @Html.ValidationMessageFor(model => model.DatabasePassword, "", new { @class = "error invalid-feedback" })
+                        </div>
+                    </div>
+                    <div id="user-form-content">
+                        <h5>Dados do Usuário Master da Loja</h5>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.FirstName)
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nome da regional" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "error invalid-feedback" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.LastName)
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "codigo" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "error invalid-feedback" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email)
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-mail do Usuário" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName)
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = "Login do Usuário" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error invalid-feedback" })
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.Password)
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error invalid-feedback" })
+                            </div>
+                            <div class="form-group col-sm-6">
+                                @Html.LabelFor(model => model.ConfirmPassword)
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirmar Senha" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "error invalid-feedback" })
+                            </div>
+                        </div>
+                    </div>                    
+                    <button type="submit" class="btn btn-success">Criar</button>
+                    <a href="@Url.Action("Index", "Empresas")" class="btn btn-danger">Cancelar</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/select2/script")
+    <script>
+        $(document).ready(function () {
+            $('.select2-element').select2(); 
+            $('#CustomerCode').next().hide('fast');
+            changeFormStructure();
+        });
+
+        $('#ImportedFromAdministrative').bind('change', function () {
+            changeFormStructure();
+        })
+
+        function changeFormStructure() {
+            if (document.getElementById('ImportedFromAdministrative').checked) {
+                $('#NameContent').hide('slow');
+                $('#user-form-content').hide('slow');
+                $('#CustomerCode').next().show('slow');
+            }
+            else {
+                $('#CustomerCode').next().hide('slow');
+                $('#NameContent').show('slow');
+                $('#user-form-content').show('slow');
+            }
+        }
+    </script>
+}

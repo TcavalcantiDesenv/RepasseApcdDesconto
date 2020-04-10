@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Painel Geral</a>
+        </li>
+        <li class="breadcrumb-item active">Transmissão ao Vivo</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Evento Maçonico</title>
+</head>
+<body>
+    <input type="text" id="YoutubeUrl" style="width:300px" />
+    <input type="button" id="PlayVideo" value="Play" />
+    <hr />
+    <iframe id="YouTubevideo" width="820" height="615"
+            frameborder="0" style="display:none"
+            allowfullscreen></iframe>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3
+      /jquery.min.js"></script>
+    <script type="text/javascript">
+        $("body").on("click", "#PlayVideo", function () {
+            var url = $("#YoutubeUrl").val();
+            url = url.split('v=')[1];
+            $("#YouTubevideo")[0].src = "//www.youtube.com/embed/" +
+                url;
+            $("#YouTubevideo").show();
+        });
+    </script>
+</body>
+</html>
+

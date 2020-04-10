@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <!-- Icons-->
+    <link rel="stylesheet" type="text/css" href="~/coreuilib/coreui/icons/css/coreui-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/coreuilib/simple-line-icons/css/simple-line-icons.css">
+    @*<link rel="icon" href="@Url.Content("~/img/brand/favicon.ico")" />*@
+    <!-- Main styles for this application-->
+    @Styles.Render("~/coreui/mainstyle/css")
+    <!--View Styles-->
+    @RenderSection("styles", required: false)
+</head>
+    <body class="app flex-row align-items-center">
+        <div class="container">
+            @RenderBody()
+        </div>
+        <!-- Bootstrap and necessary plugins-->
+        @Scripts.Render("~/coreui/plugins/js")
+        <!-- Plugins and scripts required by this view-->
+        @Scripts.Render("~/coreui/charts/js")
+        <!--View Modals-->
+        @RenderSection("modals", required: false)
+        <!--View Scripts-->
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+

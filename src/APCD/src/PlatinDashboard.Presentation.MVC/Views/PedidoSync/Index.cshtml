@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@section styles{
+    @Styles.Render("~/coreui/ladda/css")
+    @Styles.Render("~/coreui/datatables/css")
+}
+@section breadcrumb{
+    <!-- Breadcrumb-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Home")">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Usuários</li>
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="javascript:void(0)">
+                    Olá @User.Identity.Name !
+                </a>
+            </div>
+        </li>
+    </ol>
+}
+<div class="card">
+    <div class="card-header">
+        <h4 style="display: inline-block">Pedidos Magento</h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-sm table-hover table-outline mb-0" id="usersTable">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">
+                        <i class="icon-people"></i>
+                    </th>
+                    <th>Cliente</th>
+                    <th>Pedido Nº</th>
+                    <th class="text-center">Data Pedido</th>
+                    <th class="text-center">IP Origem</th>
+                    <th class="text-center">Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in @ViewBag.TesteCliente)
+                {
+                    <tr id="user-row- @ViewBag.TesteCliente">
+                        <td class="text-center">
+                            <div class="avatar">
+                                <div class="user-initial">
+                                    <span>A</span>
+                                </div>
+                                @if (true)
+                                {
+                                    <span class="avatar-status badge-success"></span>
+                                }
+                                else
+                                {
+                                    <span class="avatar-status badge-danger"></span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <div> Antonio Carlos Prado</div>
+                            <div class="small text-muted">
+                                Pedido em: 06/04/2018
+                            </div>
+                        </td>
+                        <td >
+                            1546
+                        </td>
+                        <td class="text-center">
+                            12/04/2018
+                        </td>
+                        <td class="text-center">
+                            200.169.74.125
+                        </td>
+                        <td class="text-center">
+                            antonio_prado@uol.com.br
+                        </td>
+
+                        <td class="text-right">
+                            <a class="btn btn-success" href="@Url.Action("Index", "ProdutosItensSync")">
+                                <i class="fa fa-search-plus ">Itens</i>
+                            </a>
+                            @*<a class="btn btn-danger ladda-button" data-style="zoom-out" href="javascript:void(0)" onclick="showDeleteModal(this, ' @ViewBag.TesteCliente')">
+                                    <i class="fa fa-trash-o "></i>
+                                </a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section modals{
+    <div id="modal-section"></div>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/unobstrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/coreui/ladda/js")
+    @Scripts.Render("~/coreui/datatables/js")
+    <script src="~/Scripts/viewsjs/index.js"></script>
+    <script src="~/Scripts/viewsjs/userindex.js"></script>
+    <script>
+        $(document).ready(function () {
+            initializeUserTable();
+        });
+    </script>
+}
+
+
